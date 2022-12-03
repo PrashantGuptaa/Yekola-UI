@@ -1,7 +1,28 @@
 .login-form-container {
-    width: 35%;
+    width: 25%;
     margin: 40px auto;
-    padding: 20px;
     border-radius: 3px;
-    box-shadow: 3px 3px 3px 1px rgb(202, 202, 202);
+    padding: 20px;
+    box-shadow: 3px 3px 3px 3px rgb(202, 202, 202);
 }
+
+@media screen and (max-width: 850px) {
+    .login-form-container {
+        width: 35%;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .login-form-container {
+        width: 45%;
+    }
+  }
+  @media screen and (max-width: 720px) {
+    .login-form-container {
+        width: 55%;
+    }
+  }
+@media screen and (max-width: 480px) {
+    .login-form-container {
+        width: 65%;
+    }
+  }

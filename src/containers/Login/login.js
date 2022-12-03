@@ -56,6 +56,7 @@ checkForErrors();
   return (
     <div className="login-form-container">
       <Form
+      onFinish={handleSubmit}
         //   {...formItemLayout}
         layout="vertical"
         form={form}
@@ -68,6 +69,7 @@ checkForErrors();
           helperText={errors.userName}
         />
         <InputWithLabel
+        type='password'
           label="Password"
           value={userDataObj.password}
           onInputChange={(e) => handleInputChange("password", e.target.value)}
@@ -75,8 +77,9 @@ checkForErrors();
           helperText={errors.password}
         />
         <Form.Item>
-          <Button type="primary" onClick={handleSubmit} htmlType="submit">
-            Login
+          <Button type="primary"
+          htmlType="submit">
+            Log In
           </Button>
         </Form.Item>
       </Form>

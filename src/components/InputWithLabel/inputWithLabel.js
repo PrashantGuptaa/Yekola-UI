@@ -8,8 +8,8 @@ const InputWithLabel = ({
   placeholder,
   helperText,
   errorLevel = "error",
+  type ='text'
 }) => {
-  console.log("F-5", helperText);
   return (
     <div className="input-container">
     <Form.Item label={label}>
@@ -17,6 +17,7 @@ const InputWithLabel = ({
         placeholder={placeholder}
         value={value}
         onChange={onInputChange}
+        type={type}
       />
     <div className={`${errorLevel} helperText`}>{helperText}</div>
     </Form.Item>

@@ -1,9 +1,9 @@
-import { Breadcrumb, Layout, Menu } from "antd";
+import { Layout } from "antd";
 import logo from "../../assets/images/logo.jpeg";
 import "./navBar.css";
 import logo2 from "../../assets/images/logo2.png";
 
-const { Header, Content, Sider } = Layout;
+const { Header } = Layout;
 
 const NavBar = () => {
   return (
