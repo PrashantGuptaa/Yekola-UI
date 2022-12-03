@@ -1,0 +1,17 @@
+.logo {
+    height: inherit;
+    transform: scale(1.5);
+}
+
+.logo-container {
+    height: 100%;
+    display: flex;
+    gap: 30px;
+}
+
+.logo-name {
+    color: white;   
+    font-size: 22px;
+    font-weight: 650;
+    letter-spacing: 4px;
+}

@@ -1,0 +1,15 @@
+.error {
+    color: red;
+}
+
+.helperText {
+    font-size: 12px;
+    height: 12px;
+    padding: 5px 5px 0 0;
+    letter-spacing: 0.7px;
+}
+
+
+.input-container {
+    height: 95px;
+}

@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import NavBar from "./components/NavBar";
+import JoinForm from "./containers/100MS/JoinRoom";
+import appRoutes from "./configs/routes";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          {appRoutes.map((route) => {
+            const { path, component: Component } = route;
+            return <Route path={path} element={<Component />} />;
+          })}
+        </Routes>
+      </BrowserRouter>
+
+      {/* <JoinForm /> */}
     </div>
   );
 }

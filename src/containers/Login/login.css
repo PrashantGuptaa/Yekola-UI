@@ -1,0 +1,7 @@
+.login-form-container {
+    width: 35%;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 3px 1px rgb(202, 202, 202);
+}
