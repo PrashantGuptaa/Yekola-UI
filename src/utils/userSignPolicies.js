@@ -1,5 +1,6 @@
 import {
   EMPTY_FIELD_ERROR,
+  INVALID_EMAIL,
   PASSWORD_LENGTH_ERROR,
   RE_PASSWORD_ERROR,
   ROLES_ERROR,
@@ -30,6 +31,13 @@ export const rePasswordPolicy = (password, rePassword) => {
 export const rolesPolicy = (roles) => {
   if (!roles.length) {
     return ROLES_ERROR;
+  }
+  return "";
+};
+
+export const emailPolicy = (email) => {
+  if (!email) {
+    return INVALID_EMAIL;
   }
   return "";
 };

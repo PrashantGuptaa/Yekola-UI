@@ -3,3 +3,4 @@ export const EMPTY_FIELD_ERROR = 'This field cannot be empty';
 export const FIX_ERRORS = 'Please resolve errors';
 export const RE_PASSWORD_ERROR = 'Password is not same';
 export const ROLES_ERROR = 'Please select atleast one role';
+export const INVALID_EMAIL = 'Invalid Email';

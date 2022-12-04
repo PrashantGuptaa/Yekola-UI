@@ -9,16 +9,17 @@ import {
   passwordPolicy,
   rePasswordPolicy,
   rolesPolicy,
+  emailPolicy,
 } from "../../utils/userSignPolicies";
 
 const initialState = {
-  userName: null,
-  email: null,
-  password: null,
-  rePassword: null,
+  userName: "",
+  email: "",
+  password: "",
+  rePassword: "",
   roles: [],
-  activeRole: null,
-  name: null,
+  activeRole: "",
+  name: "",
 };
 const CheckboxGroup = Checkbox.Group;
 
@@ -27,21 +28,34 @@ const Register = () => {
   const [userDataObj, setUserDataObj] = useState(initialState);
   const [errors, setErrors] = useState(initialState);
   const [availableRoles, setAvailableRoles] = useState(["Guest"]);
-  const [selectedRoles, setSelectedRoles] = useState([]);
+  const [showErrors, setShowErrors] = useState({});
 
   useEffect(() => {
     fetchAllRoles();
   }, []);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const initialErrors = {
+      ...initialState,
+    };
+    Object.keys(initialErrors).forEach((key) => (initialErrors[key] = true));
+    setShowErrors(initialErrors);
+    checkForErrors(userDataObj);
+  };
 
   const handleInputChange = (key, value) => {
-    const obj = {
+    const userDataObjCopy = {
       ...userDataObj,
     };
-    obj[key] = value;
-    setUserDataObj(obj);
-    checkForErrors(obj);
+    const showErrorObj = {
+      ...showErrors,
+    };
+
+    userDataObjCopy[key] = value;
+    showErrorObj[key] = true;
+    setShowErrors(showErrorObj);
+    setUserDataObj(userDataObjCopy);
+    checkForErrors(userDataObjCopy);
   };
 
   const checkForErrors = (userDataObj) => {
@@ -51,29 +65,25 @@ const Register = () => {
       userDataObj.password,
       userDataObj.rePassword
     );
+    const email = emailPolicy(userDataObj.email);
     const roles = rolesPolicy(userDataObj.roles);
     setErrors({
       userName,
       password,
       rePassword,
       roles,
+      email
     });
   };
 
   const fetchAllRoles = async () => {
     try {
       const result = await HttpServices.getRequest(FETCH_ALL_ROLES_ENDPOINT);
-      console.log(result, "F-7");
       const roles = result.data.map((roleObj) => roleObj.role);
       setAvailableRoles(roles);
     } catch (e) {
       console.error(e);
     }
-  };
-
-  const handleRolesChange = (selectedRoles) => {
-    console.log("F-11", selectedRoles);
-    setSelectedRoles(selectedRoles);
   };
 
   return (
@@ -85,6 +95,7 @@ const Register = () => {
           onInputChange={(e) => handleInputChange("email", e.target.value)}
           placeholder="Enter email"
           helperText={errors.email}
+          showError={showErrors.email}
         />
         <InputWithLabel
           label="User Name"
@@ -92,6 +103,7 @@ const Register = () => {
           onInputChange={(e) => handleInputChange("userName", e.target.value)}
           placeholder="Enter User Name"
           helperText={errors.userName}
+          showError={showErrors.userName}
         />
         <InputWithLabel
           type="password"
@@ -100,6 +112,7 @@ const Register = () => {
           onInputChange={(e) => handleInputChange("password", e.target.value)}
           placeholder="Enter Password"
           helperText={errors.password}
+          showError={showErrors.password}
         />
         <InputWithLabel
           type="password"
@@ -108,6 +121,7 @@ const Register = () => {
           onInputChange={(e) => handleInputChange("rePassword", e.target.value)}
           placeholder="Enter Password"
           helperText={errors.rePassword}
+          showError={showErrors.rePassword}
         />
         <div className="bottom-padding">
           <CheckboxGroup
@@ -115,7 +129,7 @@ const Register = () => {
             value={userDataObj.roles}
             onChange={(value) => handleInputChange("roles", value)}
           />
-          <div className="error">{errors.roles}</div>
+          {showErrors.roles && <div className="error">{errors.roles}</div>}
         </div>
 
         <Form.Item>

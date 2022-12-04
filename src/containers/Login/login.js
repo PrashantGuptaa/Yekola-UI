@@ -8,14 +8,15 @@ import { LOGIN_ENPOINT } from "../../configs/apiEndpoints";
 import { get } from "lodash";
 import { FIX_ERRORS } from './../../configs/constants';
 
-const intialState = {
+const initialState = {
     userName: null,
     password: null
 }
 const Login = () => {
   const [form] = Form.useForm();
-  const [userDataObj, setUserDataObj] = useState(intialState);
-  const [errors, setErrors] = useState(intialState);
+  const [userDataObj, setUserDataObj] = useState(initialState);
+  const [errors, setErrors] = useState(initialState);
+  const [showErrors, setShowErrors] = useState({});
 
   const checkForErrors = (userDataObj) => {
     const password = passwordPolicy(userDataObj.password);
@@ -30,13 +31,23 @@ const Login = () => {
     const obj = {
       ...userDataObj,
     };
+    const showErrorObj = {
+      ...showErrors,
+    };
     obj[key] = value;
+    showErrorObj[key] = true;
+    setShowErrors(showErrorObj);
     setUserDataObj(obj);
 checkForErrors(obj);
 
   };
 
   const handleSubmit = async () => {
+    const initialErrors = {
+      ...initialState,
+    };
+    Object.keys(initialErrors).forEach((key) => (initialErrors[key] = true));
+    setShowErrors(initialErrors);
     if (Object.values(errors).length) {
         message.warning(FIX_ERRORS);
         checkForErrors(userDataObj);
@@ -66,6 +77,8 @@ checkForErrors(obj);
           onInputChange={(e) => handleInputChange("userName", e.target.value)}
           placeholder="Enter User Name"
           helperText={errors.userName}
+          showError={showErrors.userName}
+
         />
         <InputWithLabel
         type='password'
@@ -74,6 +87,7 @@ checkForErrors(obj);
           onInputChange={(e) => handleInputChange("password", e.target.value)}
           placeholder="Enter Password"
           helperText={errors.password}
+          showError={showErrors.password}
         />
         <Form.Item>
           <Button type="primary"
