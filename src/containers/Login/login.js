@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, message } from "antd";
 import "./login.css";
 import InputWithLabel from "./../../components/InputWithLabel/index";
-import { passwordPolicy, userNamePolicy } from "../../utils/utils";
+import { passwordPolicy, userNamePolicy } from "../../utils/userSignPolicies";
 import HttpServices from "../../configs/https.service";
 import { LOGIN_ENPOINT } from "../../configs/apiEndpoints";
 import { get } from "lodash";
@@ -17,11 +17,7 @@ const Login = () => {
   const [userDataObj, setUserDataObj] = useState(intialState);
   const [errors, setErrors] = useState(intialState);
 
-  useEffect(() => {
-checkForErrors();
-  }, [userDataObj]);
-
-  const checkForErrors = () => {
+  const checkForErrors = (userDataObj) => {
     const password = passwordPolicy(userDataObj.password);
     const userName = userNamePolicy(userDataObj.userName);
     setErrors({
@@ -36,11 +32,14 @@ checkForErrors();
     };
     obj[key] = value;
     setUserDataObj(obj);
+checkForErrors(obj);
+
   };
 
   const handleSubmit = async () => {
     if (Object.values(errors).length) {
         message.warning(FIX_ERRORS);
+        checkForErrors(userDataObj);
         return;
     }
     try {
@@ -79,7 +78,7 @@ checkForErrors();
         <Form.Item>
           <Button type="primary"
           htmlType="submit">
-            Log In
+            Sign In
           </Button>
         </Form.Item>
       </Form>

@@ -1,28 +1,28 @@
-/* .login-form-container {
+.sign-user-container {
     width: 25%;
     margin: 40px auto;
     border-radius: 3px;
-    padding: 20px;
+    padding: 5px 20px;
     box-shadow: 3px 3px 3px 3px rgb(202, 202, 202);
 }
 
 @media screen and (max-width: 850px) {
-    .login-form-container {
+    .sign-user-container {
         width: 35%;
     }
   }
   @media screen and (max-width: 600px) {
-    .login-form-container {
+    .sign-user-container {
         width: 45%;
     }
   }
   @media screen and (max-width: 720px) {
-    .login-form-container {
+    .sign-user-container {
         width: 55%;
     }
   }
 @media screen and (max-width: 480px) {
-    .login-form-container {
+    .sign-user-container {
         width: 65%;
     }
-  } */
+  }
