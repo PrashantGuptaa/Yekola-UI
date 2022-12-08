@@ -14,3 +14,8 @@
 .input-container {
     height: 95px;
 }
+
+.required {
+    color: red;
+    margin-top: 10px;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, message } from "antd";
 import "./login.css";
-import InputWithLabel from "./../../components/InputWithLabel/index";
+import InputWithLabel from "./../../components/InputWithLabel";
 import { passwordPolicy, userNamePolicy } from "../../utils/userSignPolicies";
 import HttpServices from "../../configs/https.service";
 import { LOGIN_ENPOINT } from "../../configs/apiEndpoints";

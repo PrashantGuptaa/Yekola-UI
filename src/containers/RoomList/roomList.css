@@ -1,0 +1,25 @@
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.room-list-container {
+    padding: 20px;
+    height: inherit;
+}
+
+.room-title {
+    font-size: 22px;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    font-family: cursive;
+}
+
+.room-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}

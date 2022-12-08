@@ -13,6 +13,7 @@ const InputWithLabel = ({
 }) => {
   return (
     <div className="input-container">
+      {/* <span className="required">*</span> */}
     <Form.Item label={label}>
       <Input
         placeholder={placeholder}

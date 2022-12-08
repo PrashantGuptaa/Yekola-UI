@@ -1,8 +1,11 @@
 import axios from "axios";
 
-const commonHeaders = {
-  "Content-Type": "application/json",
-};
+const getCommonHeaders = () => {
+  return  {
+    "Content-Type": "application/json",
+    'authorization': `Bearer ${localStorage.getItem('authToken')}`
+  }
+}
 
 const BASE_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const HttpServices = {
@@ -11,7 +14,7 @@ const HttpServices = {
       method: "get",
       url: `${BASE_BACKEND_URL}${url}`,
       headers: {
-        ...commonHeaders,
+        ...getCommonHeaders(),
         ...headers,
       },
     });
@@ -23,7 +26,7 @@ const HttpServices = {
       url: `${BASE_BACKEND_URL}${url}`,
       data,
       headers: {
-        ...commonHeaders,
+        ...getCommonHeaders(),
         ...headers,
       },
     });
@@ -35,7 +38,7 @@ const HttpServices = {
       url: `${BASE_BACKEND_URL}${url}`,
       data,
       headers: {
-        ...commonHeaders,
+        ...getCommonHeaders(),
         ...headers,
       },
     });
@@ -47,7 +50,7 @@ const HttpServices = {
       url: `${BASE_BACKEND_URL}${url}`,
       data,
       headers: {
-        ...commonHeaders,
+        ...getCommonHeaders(),
         ...headers,
       },
     });
