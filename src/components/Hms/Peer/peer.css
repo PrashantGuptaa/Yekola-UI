@@ -1,0 +1,26 @@
+.peer-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+    /* align-items: center; */
+    height: 20%;
+    width: 20%;
+    /* box-shadow: 1px 1px 3px 0 grey; */
+}
+
+.peer-video {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.peer-vide-container {
+    height: 100%;
+    width: 100%;
+}
+
+.no-video {
+    height: 20%;
+    width: 20%;
+}

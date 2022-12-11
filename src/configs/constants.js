@@ -4,3 +4,4 @@ export const FIX_ERRORS = 'Please resolve errors';
 export const RE_PASSWORD_ERROR = 'Password is not same';
 export const ROLES_ERROR = 'Please select atleast one role';
 export const INVALID_EMAIL = 'Invalid Email';
+export const RESERVED_UNDERSCORE_ERROR = '"_ (Underscore)" is a reserved keyword. Please use any other character';

@@ -1,15 +1,18 @@
-import { Button, Spin, Modal, Form } from "antd";
-import { useParams } from "react-router-dom";
+import { Button, Spin, Modal, Form, Typography } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import "./roomList.css";
 import { useState, useEffect } from "react";
 import InputWithLabel from "../../components/InputWithLabel";
-import { EMPTY_FIELD_ERROR } from "../../configs/constants";
+import { EMPTY_FIELD_ERROR, RESERVED_UNDERSCORE_ERROR } from "../../configs/constants";
 import HttpServices from "../../configs/https.service";
 import {
   CREATE_ROOM_ENDPOINT,
   FETCH_ROOM_LIST,
 } from "../../configs/apiEndpoints";
 import RoomBlock from "../../components/RoomBlock";
+import roomNotFound from '../../assets/images/roomNotFound.png';
+
+const { Title } = Typography;
 
 const RoomList = () => {
   const [showCreateRoomModal, setShowCreateRoomModal] = useState(false);
@@ -18,18 +21,22 @@ const RoomList = () => {
   const [showErrors, setShowErrors] = useState({});
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [roomList, setRoomList] = useState([]);
+  const [isroomListLoading, setIsRoomListLoading] = useState(true);
 
   const routeParams = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchRoomsList();
   }, []);
 
+
+
   const [form] = Form.useForm();
 
   const { product } = routeParams;
 
-  const createRoomHeadingAndLabel = `Create ${product} Room`;
+  const createRoomHeadingAndLabel = `Create new ${product} classroom`;
 
   const handleCreateRoomSubmit = () => {
     if (checkForErrors()) {
@@ -44,6 +51,11 @@ const RoomList = () => {
     const { name, description } = roomDetails;
     if (!name) {
       errorsMessage.name = EMPTY_FIELD_ERROR;
+      showErrorMessages.name = true;
+    }
+
+    if (name && name.includes("_")) {
+      errorsMessage.name = RESERVED_UNDERSCORE_ERROR;
       showErrorMessages.name = true;
     }
 
@@ -90,28 +102,44 @@ const RoomList = () => {
       setRoomList(data);
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsRoomListLoading(false);
     }
   };
+
+  const handleJoinRoom = async (roomId, roomName) => {
+navigate(`/class-room/${product}/${roomName}/${roomId}`)
+  }
 
   return (
     <div className="room-list-container">
       <div className="btn-container">
         <div className="room-title" level={5}>{`Room List`}</div>
-        <Button type="primary" onClick={() => setShowCreateRoomModal(true)}>
+        <Button onClick={() => setShowCreateRoomModal(true)}>
           {createRoomHeadingAndLabel}
         </Button>
       </div>
 
-      {!roomList.length ? (
+      {isroomListLoading ? (
         <div className="complete-center">
           <Spin tip="Loading..." size="large" />
         </div>
       ) : (
+        <div>
         <div className="room-list">
           {roomList.map((roomObj) => (
-            <RoomBlock roomObj={roomObj} key={roomObj.roomId} />
+            <RoomBlock roomObj={roomObj} key={roomObj.roomId} handleJoinRoom={handleJoinRoom}/>
           ))}
         </div>
+        {
+          !isroomListLoading && !roomList?.length &&
+          <div className="room-not-found">
+            <img src={roomNotFound} alt='Room not found' className="room-not-found-image" />
+            <Title level={3}>No Class Room found</Title>
+          </div>
+        }
+        </div>
+
       )}
 
       <Modal

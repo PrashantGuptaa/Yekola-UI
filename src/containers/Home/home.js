@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { FETCH_ALL_PRODUCTS_ENDPOINT } from "../../configs/apiEndpoints";
 import HttpServices from "./../../configs/https.service";
-import { Spin } from "antd";
+import { Spin, Card } from "antd";
 import ProductCard from "./../../components/ProductCard/";
 import "./home.css";
+import defaultImg from "../../assets/images/logo2.png";
+import { useNavigate } from 'react-router-dom';
 
+const { Meta } = Card;
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     fetchAllProducts();
   }, []);
@@ -19,6 +23,10 @@ const Home = () => {
       console.error(e);
     }
   };
+
+  const handleProductSelection = (product) => {
+    navigate(`/room-list/${product}`)
+  }
   return (
     <>
       {!products.length ? (
@@ -28,8 +36,21 @@ const Home = () => {
       ) : (
         <div className="home">
           {products.map((productObj) => {
-            const { id, product } = productObj;
-            return <ProductCard key={id} id={id} product={product} />;
+            const { id, product, description } = productObj;
+            return (
+              <Card
+                onClick={() => handleProductSelection(product)}
+                key={id}
+                hoverable
+                style={{
+                  width: 240,
+                  height: 350,
+                }}
+                cover={<img alt="example" src={defaultImg} />}
+              >
+                <Meta title={product} description={description} />
+              </Card>
+            );
           })}
         </div>
       )}

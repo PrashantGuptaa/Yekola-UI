@@ -9,3 +9,12 @@
   align-items: center;
   height: 80vh;
 }
+
+.vertical-center {
+  display: flex;
+  justify-content: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

@@ -5,7 +5,7 @@ import hindiImg from "../../assets/images/products/Hindi.png";
 import englishImg from "../../assets/images/products/English.png";
 import defaultImg from "../../assets/images/logo2.png";
 
-const ProductCard = ({ id, product }) => {
+const ProductCard = ({ id, product, description }) => {
   const getProductImage = (productName) => {
     console.log("Image F-3", productName)
     switch (productName) {
@@ -24,9 +24,14 @@ const ProductCard = ({ id, product }) => {
       <div className="product-image-container">
         <img src={getProductImage(product)} alt={product} className='product-image'/>
       </div>
-      <p>
+      <div className="product-details-section">
+        <div className="product-name">
         {product}
-      </p>
+        </div>
+        <div className="product-description">
+        {description}
+        </div>
+      </div>
     </div>
   );
 };

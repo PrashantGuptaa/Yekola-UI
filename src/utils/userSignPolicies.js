@@ -17,7 +17,6 @@ export const userNamePolicy = (userName) => {
   if (!userName) {
     return EMPTY_FIELD_ERROR;
   }
-
   return "";
 };
 

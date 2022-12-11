@@ -1,0 +1,25 @@
+.conference-section {
+  width: 100vw;
+}
+
+.room-name {
+  height: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.peers-container {
+  display: flex;
+  justify-content: center;
+}
+
+.meta-room-section {
+  display: flex;
+  padding: 5px 30px;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 1px solid; */
+  /* margin: 10px 0px; */
+  /* box-shadow: 1px 0px 2px 0px rgb(175, 175, 175); */
+}

@@ -23,3 +23,15 @@
     gap: 20px;
     padding: 20px;
 }
+
+.room-not-found-image {
+    width: 40%;
+}
+
+.room-not-found {
+    display: flex;
+    flex-direction: column;
+    height: 30%;
+    width: 100%;
+    align-items: center;
+}
