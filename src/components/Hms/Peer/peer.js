@@ -1,22 +1,32 @@
-import { useVideo } from "@100mslive/react-sdk";
-import './peer.css';
+import "./peer.css";
+import { Avatar, Button } from "antd";
+import { getRandomAvatarColor } from "../../../utils/helperFuncs";
 
 function Peer({ peer }) {
-  const { videoRef } = useVideo({
-    trackId: peer.videoTrack
-  });
-  console.log("F-4")
+  const getNameIntials = () => {
+    try {
+      const nameArr = peer?.name?.split(" ");
+      return `${nameArr[0][0]}${nameArr[nameArr.length - 1][0]}`;
+    } catch (e) {
+      console.error("Error in name Intial", e);
+      return "U";
+    }
+  };
+  console.log("F-4", peer);
   return (
     <div className="peer-container">
       <div className="peer-video-container">
-
-      <video
-        ref={videoRef}
-        className={`peer-video ${peer.isLocal ? "local" : ""}`}
-        autoPlay
-        muted
-        playsInline
-      />
+        <div className="peer-avatar-container">
+          <Avatar
+            className="room-block-image"
+            style={{
+              backgroundColor: getRandomAvatarColor(),
+            }}
+            size="large"
+          >
+            {getNameIntials()}
+          </Avatar>
+        </div>
       </div>
       <div className="peer-name">
         {peer.name} {peer.isLocal ? "(You)" : ""}

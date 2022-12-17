@@ -1,6 +1,7 @@
 import "./roomBlock.css";
 import profileImg from "../../assets/images/profile.png";
 import { Avatar, Button } from "antd";
+import { getRandomAvatarColor } from "../../utils/helperFuncs";
 
 const RoomBlock = ({ roomObj, handleJoinRoom }) => {
   const {
@@ -14,22 +15,6 @@ const RoomBlock = ({ roomObj, handleJoinRoom }) => {
   } = roomObj;
 
   console.log("F-1", roomObj);
-
-  const getRandomAvatarColor = () => {
-    const colors = [
-      "#f04900",
-      "#d21b8b",
-      "red",
-      "#0053a5",
-      "black",
-      "#407806",
-      "purple",
-      "darkblue",
-      "green",
-      "darkgreen",
-    ];
-    return colors[Math.round(Math.random() * 10)];
-  };
 
   const getInstructorName = () => instructor || createdBy;
 
