@@ -17,8 +17,6 @@ const initialState = {
   email: "",
   password: "",
   rePassword: "",
-  roles: [],
-  activeRole: "",
   name: "",
 };
 const CheckboxGroup = Checkbox.Group;
@@ -123,14 +121,14 @@ const Register = () => {
           helperText={errors.rePassword}
           showError={showErrors.rePassword}
         />
-        <div className="bottom-padding">
+        {/* <div className="bottom-padding">
           <CheckboxGroup
             options={availableRoles}
             value={userDataObj.roles}
             onChange={(value) => handleInputChange("roles", value)}
           />
           {showErrors.roles && <div className="error">{errors.roles}</div>}
-        </div>
+        </div> */}
 
         <Form.Item>
           <Button type="primary" htmlType="submit">

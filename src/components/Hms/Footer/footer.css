@@ -14,7 +14,7 @@
 }
 
 .icon-container:hover {
-  color: rgb(153, 153, 153);
+  color: rgb(255, 255, 255);
 }
 
 .st-icon {
@@ -38,3 +38,4 @@
   align-items: center;
   gap: 10px;
 }
+

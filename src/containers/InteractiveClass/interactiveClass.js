@@ -4,6 +4,7 @@ import {
   useHMSActions,
   useHMSStore,
   selectPeers, 
+  selectLocalPeer
 } from "@100mslive/react-sdk";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef,useState } from "react";
@@ -25,9 +26,7 @@ const InteractiveClass = () => {
   const hmsActions = useHMSActions();
   const navigate = useNavigate();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
-
-  console.log("F-4", isConnected);
-
+  
   useEffect(() => {
     window.onunload = () => {
       if (isConnected) {
@@ -47,7 +46,6 @@ const InteractiveClass = () => {
     const { data } = await HttpServices.getRequest(
       JOIN_HMS_ROOM_ENDPOINT(roomId)
     );
-    console.log("F-8", data);
     const { name: userName, authToken } = data;
     await hmsActions.join({
       userName,
@@ -69,7 +67,7 @@ const InteractiveClass = () => {
   const getClassRoomView = () => {
     return <>
     <Conference handleLeaveRoom={handleLeaveRoom}/>
-    <HmsFooter handleShowParticipantList={() => setShowParticipantList(true)} />
+    <HmsFooter showParticipantList={showParticipantList} handleShowParticipantList={() => setShowParticipantList(true)} />
     <ParticipantList users={users} showParticipantList={showParticipantList} handleCloseParticipantList={() => setShowParticipantList(false)} />
     </>
   }

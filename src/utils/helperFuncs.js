@@ -1,4 +1,4 @@
-export   const getRandomAvatarColor = () => {
+export   const getRandomAvatarColor = (id) => {
     const colors = [
       "#f04900",
       "#d21b8b",
@@ -11,7 +11,15 @@ export   const getRandomAvatarColor = () => {
       "green",
       "darkgreen",
     ];
-    return colors[Math.round(Math.random() * 10)];
+    let firstNumber = 0;
+    const sp = id.split("-")[0];
+    for (let i = 0; i <sp.length; i++) {
+      if (isNumber(sp[i])) {
+        firstNumber = sp[i];
+        break;
+      }
+    }
+    return colors[firstNumber];
   };
 
   export const getNameIntials = (name) => {
@@ -23,3 +31,10 @@ export   const getRandomAvatarColor = () => {
       return "U";
     }
   };
+
+  export const getLocalUserName = (peer) => {
+    const { name, isLocal } = peer;
+    return isLocal ? `${name} (You)` : name;
+  }
+
+  export const isNumber = (num) =>!isNaN(parseInt(num));

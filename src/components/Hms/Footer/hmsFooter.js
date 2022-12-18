@@ -5,6 +5,7 @@ import {
   useHMSActions,
   selectPermissions,
   selectIsAllowedToPublish,
+  selectLocalPeer,
 } from "@100mslive/react-sdk";
 import {
   CameraOutlined,
@@ -21,12 +22,17 @@ import {
   TbMicrophone,
   TbMicrophoneOff,
 } from "react-icons/tb";
+import { FaUsersSlash, FaUsers } from "react-icons/fa";
+import {IoIosHand} from 'react-icons/io';
 
-function HmsFooter({}) {
+function HmsFooter({ showParticipantList, handleShowParticipantList }) {
   const { isLocalAudioEnabled, isLocalVideoEnabled, toggleAudio, toggleVideo } =
     useAVToggle();
   const amIScreenSharing = useHMSStore(selectIsLocalScreenShared);
   const publishPermissions = useHMSStore(selectIsAllowedToPublish);
+  const localPeer = useHMSStore(selectLocalPeer);
+  const {isHandRaised = false} = JSON.parse(localPeer?.metadata || "{}")
+
 
   const { screen: isScreenShareAllowed, audio: isEnablingAudioAllowed } =
     publishPermissions;
@@ -47,11 +53,17 @@ function HmsFooter({}) {
       console.error(e);
     }
   };
-  const contClassName = "icon-container  complete-center";
+
+  const handleRaiseHand = async () => {
+    const metaData = JSON.parse(localPeer?.metadata || "{}");
+    metaData.isHandRaised = !metaData.isHandRaised;
+    hmsActions.changeMetadata( JSON.stringify(metaData))
+  }
+  const contClassName = `icon-container  complete-center`;
 
   return (
     <div className="control-bar">
-      <span className={contClassName} onClick={toggleAudio}>
+      <span className={`${contClassName} ${isEnablingAudioAllowed ?  null : "disabled1"}`} onClick={toggleAudio}>
         {isLocalAudioEnabled ? (
           <>
             <TbMicrophone className="st-icon" />
@@ -59,7 +71,6 @@ function HmsFooter({}) {
           </>
         ) : (
           <>
-
             <TbMicrophoneOff className="st-icon" />
             <span>Unmute</span>
           </>
@@ -80,6 +91,26 @@ function HmsFooter({}) {
           )}
         </span>
       ) : null}
+
+      <span className={contClassName} onClick={handleShowParticipantList}>
+            {showParticipantList ? <FaUsersSlash className="st-icon" /> : <FaUsers className="st-icon" />}
+            <span>Particpants</span>
+          
+      </span>
+      <span className={contClassName} onClick={handleRaiseHand}>
+        {isHandRaised ? (
+          <>
+            <IoIosHand className="st-icon raise" />
+            <span>Down</span>
+          </>
+        ) : (
+          <>
+            <IoIosHand className="st-icon" />
+            <span>Raise</span>
+          </>
+        )}
+      </span>
+      IoIosHand
       {/* <span></span> */}
     </div>
   );

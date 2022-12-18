@@ -1,6 +1,7 @@
 import "./peer.css";
 import { Avatar, Button } from "antd";
 import { getNameIntials, getRandomAvatarColor } from "../../../utils/helperFuncs";
+import { getLocalUserName } from './../../../utils/helperFuncs';
 
 function Peer({ peer }) {
 
@@ -12,7 +13,7 @@ function Peer({ peer }) {
           <Avatar
             className="room-block-image"
             style={{
-              backgroundColor: getRandomAvatarColor(),
+              backgroundColor: getRandomAvatarColor(peer.id),
             }}
             size="large"
           >
@@ -21,7 +22,7 @@ function Peer({ peer }) {
         </div>
       </div>
       <div className="peer-name">
-        {peer.name} {peer.isLocal ? "(You)" : ""}
+        {getLocalUserName(peer)}
       </div>
     </div>
   );

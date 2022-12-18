@@ -26,7 +26,7 @@ const RoomBlock = ({ roomObj, handleJoinRoom }) => {
           <Avatar
             className="room-block-image"
             style={{
-              backgroundColor: getRandomAvatarColor(),
+              backgroundColor: getRandomAvatarColor(getInstructorName()),
               verticalAlign: "middle",
             }}
             size="large"
