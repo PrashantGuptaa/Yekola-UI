@@ -13,7 +13,7 @@ const NavBar = () => {
       <Header className="header">
         <div className="logo-container cursor-pointer" onClick={() => navigate('/')}>
           <img src={logo} alt="Yekola-Logo" className="logo" />
-          <span className="logo-name">YEKOLA</span>
+          {/* <span className="logo-name">YEKOLA</span> */}
         </div>
       </Header>
     </Layout>

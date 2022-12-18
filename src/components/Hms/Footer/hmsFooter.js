@@ -7,15 +7,8 @@ import {
   selectIsAllowedToPublish,
   selectLocalPeer,
 } from "@100mslive/react-sdk";
-import {
-  CameraOutlined,
-  AudioMutedOutlined,
-  AudioOutlined,
-  FundProjectionScreenOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+
 import "./footer.css";
-import CameraOff from "../../../assets/images/no-video.png";
 import {
   TbScreenShare,
   TbScreenShareOff,
@@ -26,7 +19,7 @@ import { FaUsersSlash, FaUsers } from "react-icons/fa";
 import {IoIosHand} from 'react-icons/io';
 
 function HmsFooter({ showParticipantList, handleShowParticipantList }) {
-  const { isLocalAudioEnabled, isLocalVideoEnabled, toggleAudio, toggleVideo } =
+  const { isLocalAudioEnabled, toggleAudio } =
     useAVToggle();
   const amIScreenSharing = useHMSStore(selectIsLocalScreenShared);
   const publishPermissions = useHMSStore(selectIsAllowedToPublish);
@@ -110,8 +103,6 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
           </>
         )}
       </span>
-      IoIosHand
-      {/* <span></span> */}
     </div>
   );
 }
