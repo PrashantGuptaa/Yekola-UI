@@ -3,16 +3,20 @@ import {
   selectIsConnectedToRoom,
   useHMSActions,
   useHMSStore,
+  selectPeers, 
 } from "@100mslive/react-sdk";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef,useState } from "react";
 import HttpServices from "../../configs/https.service";
 import { JOIN_HMS_ROOM_ENDPOINT } from "../../configs/apiEndpoints";
 import Conference from './../../components/Hms/Conference';
 import HmsFooter from './../../components/Hms/Footer';
 import './interactiveClass.css';
+import ParticipantList from "../../components/ParticipantList";
 
 const InteractiveClass = () => {
+  const [showParticipantList, setShowParticipantList] = useState(false);
+  const users = useHMSStore(selectPeers);
   const isFirstRender = useRef(true);
   const routeParams = useParams();
   const { roomId, product } = routeParams;
@@ -65,7 +69,8 @@ const InteractiveClass = () => {
   const getClassRoomView = () => {
     return <>
     <Conference handleLeaveRoom={handleLeaveRoom}/>
-    <HmsFooter />
+    <HmsFooter handleShowParticipantList={() => setShowParticipantList(true)} />
+    <ParticipantList users={users} showParticipantList={showParticipantList} handleCloseParticipantList={() => setShowParticipantList(false)} />
     </>
   }
   return (

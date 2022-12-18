@@ -13,3 +13,13 @@ export   const getRandomAvatarColor = () => {
     ];
     return colors[Math.round(Math.random() * 10)];
   };
+
+  export const getNameIntials = (name) => {
+    try {
+      const nameArr = name?.split(" ");
+      return `${nameArr[0][0]}${nameArr[nameArr.length - 1][0]}`;
+    } catch (e) {
+      console.error("Error in name Intial", e);
+      return "U";
+    }
+  };

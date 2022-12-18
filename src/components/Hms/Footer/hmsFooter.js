@@ -15,6 +15,12 @@ import {
 } from "@ant-design/icons";
 import "./footer.css";
 import CameraOff from "../../../assets/images/no-video.png";
+import {
+  TbScreenShare,
+  TbScreenShareOff,
+  TbMicrophone,
+  TbMicrophoneOff,
+} from "react-icons/tb";
 
 function HmsFooter({}) {
   const { isLocalAudioEnabled, isLocalVideoEnabled, toggleAudio, toggleVideo } =
@@ -35,36 +41,42 @@ function HmsFooter({}) {
 
   const handleScreenShare = async () => {
     try {
-      await hmsActions.setScreenShareEnabled(true);
+      await hmsActions.setScreenShareEnabled(!amIScreenSharing);
+      // await hmsActions.setsc
     } catch (e) {
       console.error(e);
     }
   };
-  const contClassName = "icon-container complete-center";
+  const contClassName = "icon-container  complete-center";
+
   return (
     <div className="control-bar">
       <span className={contClassName} onClick={toggleAudio}>
-        {isLocalAudioEnabled
-          ? // <AudioMutedOutlined className="st-icon" />
-            "Mute"
-          : // <AudioOutlined className="st-icon" />
-            "Unmute"}
-      </span>
-      {/* <span className={contClassName} onClick={toggleVideo}>
-        {isLocalVideoEnabled ? (
-          // <EyeInvisibleOutlined className='st-icon'/>
-          <img src={CameraOff} alt="camera-off" className="img-icon" />
+        {isLocalAudioEnabled ? (
+          <>
+            <TbMicrophone className="st-icon" />
+            <span>Mute</span>
+          </>
         ) : (
-          <VideoCameraOutlined className="st-icon" />
+          <>
+
+            <TbMicrophoneOff className="st-icon" />
+            <span>Unmute</span>
+          </>
         )}
-      </span> */}
+      </span>
       {isScreenShareAllowed ? (
         <span className={contClassName} onClick={handleScreenShare}>
           {amIScreenSharing ? (
-            // <EyeInvisibleOutlined className='st-icon'/>
-            <img src={CameraOff} alt="camera-off" className="img-icon" />
+            <>
+              <TbScreenShareOff className="st-icon" />
+              <span>Stop</span>
+            </>
           ) : (
-            <FundProjectionScreenOutlined className="st-icon" />
+            <>
+              <TbScreenShare className="st-icon" />
+              <span>Share</span>
+            </>
           )}
         </span>
       ) : null}
