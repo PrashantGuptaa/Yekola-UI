@@ -3,6 +3,7 @@ import SignUser from "./../containers/SignUser";
 import Home from "./../containers/Home";
 import RoomList from "./../containers/RoomList/";
 import InteractiveClass from "../containers/InteractiveClass";
+import Authentication from "../components/Hoc";
 
 const appRoutes = [
   {
@@ -23,7 +24,7 @@ const appRoutes = [
   },
   {
     path: "/",
-    component: Home,
+    component: Authentication(Home),
   },
 ];
 

@@ -1,18 +1,35 @@
-import { Button, Spin, Modal, Form, Typography } from "antd";
+import {
+  Button,
+  Spin,
+  Modal,
+  Form,
+  Typography,
+  DatePicker,
+  Space,
+  TimePicker,
+} from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./roomList.css";
 import { useState, useEffect } from "react";
 import InputWithLabel from "../../components/InputWithLabel";
-import { EMPTY_FIELD_ERROR, RESERVED_UNDERSCORE_ERROR } from "../../configs/constants";
+import {
+  EMPTY_FIELD_ERROR,
+  RESERVED_UNDERSCORE_ERROR,
+} from "../../configs/constants";
 import HttpServices from "../../configs/https.service";
 import {
+  CREATE_ROOM_AUTH_ENDPOINT,
   CREATE_ROOM_ENDPOINT,
   FETCH_ROOM_LIST,
 } from "../../configs/apiEndpoints";
 import RoomBlock from "../../components/RoomBlock";
-import roomNotFound from '../../assets/images/roomNotFound.png';
+import roomNotFound from "../../assets/images/roomNotFound.png";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import moment from 'moment';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
+dayjs.extend(customParseFormat);
 
 const RoomList = () => {
   const [showCreateRoomModal, setShowCreateRoomModal] = useState(false);
@@ -22,21 +39,31 @@ const RoomList = () => {
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [roomList, setRoomList] = useState([]);
   const [isroomListLoading, setIsRoomListLoading] = useState(true);
+  const [showCreateRoomBtn, setShowCreateRoomBtn] = useState(false);
 
   const routeParams = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchRoomsList();
+    checkCreateRoomAccess();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-
 
   const [form] = Form.useForm();
 
   const { product } = routeParams;
 
   const createRoomHeadingAndLabel = `Create new ${product} classroom`;
+
+  const checkCreateRoomAccess = async () => {
+    try {
+      const { data } = await HttpServices.getRequest(CREATE_ROOM_AUTH_ENDPOINT);
+      setShowCreateRoomBtn(data.createRoom);
+    } catch (e) {
+      console.error("Error while verfiying if user can create room", e);
+    }
+  }
 
   const handleCreateRoomSubmit = () => {
     if (checkForErrors()) {
@@ -79,6 +106,17 @@ const RoomList = () => {
     setRoomDetails(obj);
   };
 
+  const handleDateAndTimeChange = (key, value, valueStr) => {
+    const obj = {
+      ...roomDetails,
+    };
+    obj[key] = value;
+    obj[`${key}Str`] = JSON.stringify(valueStr);
+    
+    setRoomDetails(obj);
+  };
+
+
   const createRoom = async () => {
     try {
       setIsCreatingRoom(true);
@@ -108,16 +146,18 @@ const RoomList = () => {
   };
 
   const handleJoinRoom = async (roomId, roomName) => {
-navigate(`/class-room/${product}/${roomName}/${roomId}`)
-  }
+    navigate(`/class-room/${product}/${roomName}/${roomId}`);
+  };
+
+
 
   return (
     <div className="room-list-container">
       <div className="btn-container">
         <div className="room-title" level={5}>{`Room List`}</div>
-        <Button onClick={() => setShowCreateRoomModal(true)}>
+        {showCreateRoomBtn && <Button onClick={() => setShowCreateRoomModal(true)}>
           {createRoomHeadingAndLabel}
-        </Button>
+        </Button>}
       </div>
 
       {isroomListLoading ? (
@@ -126,20 +166,26 @@ navigate(`/class-room/${product}/${roomName}/${roomId}`)
         </div>
       ) : (
         <div>
-        <div className="room-list">
-          {roomList.map((roomObj) => (
-            <RoomBlock roomObj={roomObj} key={roomObj.roomId} handleJoinRoom={handleJoinRoom}/>
-          ))}
-        </div>
-        {
-          !isroomListLoading && !roomList?.length &&
-          <div className="room-not-found">
-            <img src={roomNotFound} alt='Room not found' className="room-not-found-image" />
-            <Title level={3}>No Class Room found</Title>
+          <div className="room-list">
+            {roomList.map((roomObj) => (
+              <RoomBlock
+                roomObj={roomObj}
+                key={roomObj.roomId}
+                handleJoinRoom={handleJoinRoom}
+              />
+            ))}
           </div>
-        }
+          {!isroomListLoading && !roomList?.length && (
+            <div className="room-not-found">
+              <img
+                src={roomNotFound}
+                alt="Room not found"
+                className="room-not-found-image"
+              />
+              <Title level={3}>No Class Room found</Title>
+            </div>
+          )}
         </div>
-
       )}
 
       <Modal
@@ -176,6 +222,22 @@ navigate(`/class-room/${product}/${roomName}/${roomId}`)
             helperText={errors.description}
             showError={showErrors.description}
           />
+          <div className="date-time">
+            <Space className="vertical">
+              <Text>Date</Text>
+              <DatePicker
+                onChange={(dateValue, dateStr) => handleDateAndTimeChange("date",  dateValue, dateStr)}
+                value={roomDetails.date}
+              />
+            </Space>
+            <Space className="vertical">
+              <Text>Start and End Time</Text>
+              <TimePicker.RangePicker
+                onChange={(value, str) => handleDateAndTimeChange("time", value, str)}
+                value={roomDetails.time}
+              />
+            </Space>
+          </div>
         </Form>
       </Modal>
     </div>

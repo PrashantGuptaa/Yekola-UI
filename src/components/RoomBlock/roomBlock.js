@@ -12,6 +12,8 @@ const RoomBlock = ({ roomObj, handleJoinRoom }) => {
     instructor,
     loading,
     disabled,
+    timeStr: timeArr,
+    dateStr,
   } = roomObj;
 
   console.log("F-1", roomObj);
@@ -36,16 +38,20 @@ const RoomBlock = ({ roomObj, handleJoinRoom }) => {
         </div>
         <div className="room-info">
           <div>
-            {/* <span className="room-text-data">Room Name: </span> */}
             {name}
           </div>
           <div className="room-text-data">
-            {/* <span className="room-text-data">Description: </span> */}
             {description}
           </div>
           <div className="instructor-name">
             <span className="room-text-data">Instructor: </span>
             {getInstructorName()}
+          </div>
+          <div>Date: {dateStr}</div>
+          <div>
+            Start Time: {timeArr?.[0]}
+            <br/> 
+            End Time: {timeArr?.[1]}
           </div>
         </div>
       </div>

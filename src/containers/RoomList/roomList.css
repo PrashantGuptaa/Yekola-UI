@@ -35,3 +35,9 @@
     width: 100%;
     align-items: center;
 }
+
+.date-time {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}

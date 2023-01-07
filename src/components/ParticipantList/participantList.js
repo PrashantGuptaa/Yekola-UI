@@ -18,7 +18,7 @@ import {
   selectRoleChangeRequest,
   selectRolesMap,
 } from "@100mslive/react-sdk";
-import {IoIosHand} from 'react-icons/io';
+import { IoIosHand } from "react-icons/io";
 
 const ParticipantList = ({
   handleCloseParticipantList,
@@ -44,9 +44,9 @@ const ParticipantList = ({
 
   const isHandRaisedForThisPeer = (peer) => {
     const peerMetaData = JSON.parse(peer?.metadata || "{}");
-    console.log("Peer meta data f-13",peer, peerMetaData);
+    console.log("Peer meta data f-13", peer, peerMetaData);
     return peerMetaData?.isHandRaised;
-  }
+  };
   return (
     <Drawer
       title={`Participants (${users.length})`}
@@ -72,31 +72,30 @@ const ParticipantList = ({
                 </Avatar>
               }
               title={
-               <Space className="user-name">
-{ getLocalUserName(peer)}
-{isHandRaisedForThisPeer(peer) && <IoIosHand className="st-icon raise" />}
-
-               </Space>}
+                <Space className="user-name">
+                  {getLocalUserName(peer)}
+                  {isHandRaisedForThisPeer(peer) && (
+                    <IoIosHand className="st-icon raise" />
+                  )}
+                </Space>
+              }
               description={<span className="capitalize">{peer.roleName}</span>}
             />
             {localUserRoleName === "moderator" && localPeerId !== peer.id && (
               <Link>
-              {
-                peer.roleName === 'speaker' ? 
-                <span
-                onClick={() => handleRoleChangeAction(peer.id, "student")}
-              >
-                Mute
-              </span>
-
-              :
-              <span
-              onClick={() => handleRoleChangeAction(peer.id, "speaker")}
-            >
-              Unmute
-            </span>
-              }
-
+                {peer.roleName === "speaker" ? (
+                  <span
+                    onClick={() => handleRoleChangeAction(peer.id, "student")}
+                  >
+                    Mute
+                  </span>
+                ) : (
+                  <span
+                    onClick={() => handleRoleChangeAction(peer.id, "speaker")}
+                  >
+                    Unmute
+                  </span>
+                )}
               </Link>
             )}
           </List.Item>
