@@ -7,20 +7,16 @@ import Authentication from "../components/Hoc";
 
 const appRoutes = [
   {
-    path: "/login",
-    component: Login,
-  },
-  {
     path: "/sign-user",
     component: SignUser,
   },
   {
     path: "/room-list/:product",
-    component: RoomList,
+    component: Authentication(RoomList),
   },
   {
     path: "/class-room/:product/:className/:roomId",
-    component: InteractiveClass,
+    component: Authentication(InteractiveClass),
   },
   {
     path: "/",

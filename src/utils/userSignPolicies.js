@@ -7,7 +7,7 @@ import {
 } from "../configs/constants";
 
 export const passwordPolicy = (password) => {
-  if (password.length <= 8) {
+  if (password?.length <= 8) {
     return PASSWORD_LENGTH_ERROR;
   }
   return "";

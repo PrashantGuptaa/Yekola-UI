@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { USER_VALIDATION_ENDPOINT } from "../../configs/apiEndpoints";
 import HttpServices from "../../configs/https.service";
+import { get } from 'lodash';
 
 const Authentication = (ServedComponent) => {
   const UserValidation = () => {
@@ -28,7 +29,8 @@ const Authentication = (ServedComponent) => {
         const response = await HttpServices.getRequest(
           USER_VALIDATION_ENDPOINT
         );
-        if (response.authenticated) {
+        console.log("F-4", response); 
+        if (get(response, ['data', 'authenticated'])) {
           setIsUserAuthenticated(true);
           return;
         }
@@ -44,7 +46,7 @@ const Authentication = (ServedComponent) => {
     return (
       <>
         {iseUserAuthenticated ? (
-          ServedComponent
+          <ServedComponent />
         ) : (
           <div className="complete-center">
             <Spin tip="Loading..." size="large" />
