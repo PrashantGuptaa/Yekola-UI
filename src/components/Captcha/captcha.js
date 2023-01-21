@@ -12,6 +12,3 @@ const Captcha = () => {
 }
  
 export default Captcha;
-
-// 6LdHPPojAAAAAJg8DxJlqXfwmphqezL4_T26gMiu
-// 6LdHPPojAAAAANDw1C02PGRfn6ibK4oT8JsznWqD

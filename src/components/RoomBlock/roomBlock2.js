@@ -18,11 +18,18 @@ const RoomBlock2 = ({ roomObj, handleJoinRoom }) => {
     instructor,
     loading,
     disabled,
-    timeStr: timeArr,
-    dateStr,
+    startDateTime,
+    endDateTime,
   } = roomObj;
-  const startTime = timeArr?.[0];
-  const endTime = timeArr?.[1];
+
+  const getDate = (dateTime) => {
+    if (!dateTime) return "";
+    const dateStr = new Date(dateTime).toDateString();
+    const time = new Date(dateTime).toLocaleTimeString();
+
+    return `${dateStr.slice(dateStr.indexOf(" "))} ${time}`;
+    // return (new Date(date)).toLocaleString();
+  };
   return (
     <div className="card-container">
       <div className="room-img-container">
@@ -32,10 +39,13 @@ const RoomBlock2 = ({ roomObj, handleJoinRoom }) => {
         <Text className="class-name">{name}</Text>
         <Text type="secondary">{description}</Text>
 
-        <Text>Date: {dateStr}</Text>
-        <div className="time-section">
-          <Text>Start Time: {startTime}</Text>
-          <Text>End Time: {endTime}</Text>
+        <div className="row">
+          <Text>Start:&nbsp; </Text>
+          <Text type="secondary">{getDate(startDateTime)}</Text>
+        </div>
+        <div className="row">
+          <Text>End:&nbsp; </Text>
+          <Text type="secondary">{getDate(endDateTime)}</Text>
         </div>
       </div>
       <button
@@ -44,7 +54,7 @@ const RoomBlock2 = ({ roomObj, handleJoinRoom }) => {
         loading={loading}
         onClick={() => handleJoinRoom(roomId, name)}
       >
-        <div>Start Learning </div>
+        Start Learning
         <HiChevronRight />
       </button>
     </div>

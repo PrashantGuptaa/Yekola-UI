@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import InputWithLabel from "../../components/InputWithLabel";
 import {
   EMPTY_FIELD_ERROR,
-  RESERVED_UNDERSCORE_ERROR,
+  RESERVED_CHARACTERS_ERROR,
 } from "../../configs/constants";
 import HttpServices from "../../configs/https.service";
 import {
@@ -27,6 +27,7 @@ import roomNotFound from "../../assets/images/roomNotFound.png";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import moment from "moment";
+import AddRoomModal from "../../components/addRoomModal";
 
 const { Title, Text } = Typography;
 dayjs.extend(customParseFormat);
@@ -59,7 +60,7 @@ const RoomList = () => {
   const checkCreateRoomAccess = async () => {
     try {
       const { data } = await HttpServices.getRequest(CREATE_ROOM_AUTH_ENDPOINT);
-      setShowCreateRoomBtn(data.createRoom);
+      setShowCreateRoomBtn(data.roomEditAllowed);
     } catch (e) {
       console.error("Error while verfiying if user can create room", e);
     }
@@ -82,7 +83,7 @@ const RoomList = () => {
     }
 
     if (name && name.includes("_")) {
-      errorsMessage.name = RESERVED_UNDERSCORE_ERROR;
+      errorsMessage.name = RESERVED_CHARACTERS_ERROR;
       showErrorMessages.name = true;
     }
 
@@ -131,7 +132,7 @@ const RoomList = () => {
 
   // const handleTimeChange
 
-  const createRoom = async () => {
+  const createRoom = async (roomDetails) => {
     try {
       setIsCreatingRoom(true);
       const { data } = await HttpServices.postRequest(CREATE_ROOM_ENDPOINT, {
@@ -202,7 +203,14 @@ const RoomList = () => {
         </div>
       )}
 
-      <Modal
+      <AddRoomModal 
+        showCreateRoomModal={showCreateRoomModal}
+        handleCreateRoomSubmit={createRoom}
+        handleCloseCreateRoomModal={() => setShowCreateRoomModal(false)}
+        isCreatingRoom={isCreatingRoom}
+      />
+
+      {/* <Modal
         title={createRoomHeadingAndLabel}
         open={showCreateRoomModal}
         onOk={handleCreateRoomSubmit}
@@ -279,7 +287,7 @@ const RoomList = () => {
             </Space>
           </div>
         </Form>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

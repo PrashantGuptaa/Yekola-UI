@@ -48,11 +48,19 @@ height: 150px;
     font-weight: 600;
     font-size: 16px;
     letter-spacing: 1px;
+    transition: 0.2s ease-in-out;
+
 }
 
-.btm-section:hover {
-    background-color: #559cff;
+.btm-section:hover:enabled {
+    background-color: #0054c9;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.btm-section:disabled {
+    background-color: #83b7ff;
+    cursor: not-allowed;
 }
 
 .class-name {
