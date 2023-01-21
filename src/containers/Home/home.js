@@ -25,7 +25,7 @@ const Home = () => {
   };
 
   const handleProductSelection = (product) => {
-    navigate(`/room-list/${product}`)
+    navigate(`/home/room-list/Lingala`)
   }
   return (
     <>

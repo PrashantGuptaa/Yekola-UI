@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import InputWithLabel from "../../components/InputWithLabel";
 import {
   EMPTY_FIELD_ERROR,
-  RESERVED_UNDERSCORE_ERROR,
+  RESERVED_CHARACTERS_ERROR,
 } from "../../configs/constants";
 import HttpServices from "../../configs/https.service";
 import {
@@ -26,16 +26,14 @@ import RoomBlock from "../../components/RoomBlock";
 import roomNotFound from "../../assets/images/roomNotFound.png";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import moment from 'moment';
+import moment from "moment";
+import AddRoomModal from "../../components/addRoomModal";
 
 const { Title, Text } = Typography;
 dayjs.extend(customParseFormat);
 
 const RoomList = () => {
   const [showCreateRoomModal, setShowCreateRoomModal] = useState(false);
-  const [roomDetails, setRoomDetails] = useState({});
-  const [errors, setErrors] = useState({});
-  const [showErrors, setShowErrors] = useState({});
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [roomList, setRoomList] = useState([]);
   const [isroomListLoading, setIsRoomListLoading] = useState(true);
@@ -47,10 +45,8 @@ const RoomList = () => {
   useEffect(() => {
     fetchRoomsList();
     checkCreateRoomAccess();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const [form] = Form.useForm();
 
   const { product } = routeParams;
 
@@ -59,65 +55,13 @@ const RoomList = () => {
   const checkCreateRoomAccess = async () => {
     try {
       const { data } = await HttpServices.getRequest(CREATE_ROOM_AUTH_ENDPOINT);
-      setShowCreateRoomBtn(data.createRoom);
+      setShowCreateRoomBtn(data.roomEditAllowed);
     } catch (e) {
       console.error("Error while verfiying if user can create room", e);
     }
-  }
-
-  const handleCreateRoomSubmit = () => {
-    if (checkForErrors()) {
-      return;
-    }
-    createRoom();
   };
 
-  const checkForErrors = () => {
-    const errorsMessage = {},
-      showErrorMessages = {};
-    const { name, description } = roomDetails;
-    if (!name) {
-      errorsMessage.name = EMPTY_FIELD_ERROR;
-      showErrorMessages.name = true;
-    }
-
-    if (name && name.includes("_")) {
-      errorsMessage.name = RESERVED_UNDERSCORE_ERROR;
-      showErrorMessages.name = true;
-    }
-
-    if (!description) {
-      errorsMessage.description = EMPTY_FIELD_ERROR;
-      showErrorMessages.description = true;
-    }
-    setErrors(errorsMessage);
-    setShowErrors(showErrorMessages);
-    if (Object.keys(errorsMessage).length) {
-      return true;
-    }
-    return false;
-  };
-
-  const handleInputChange = (key, value) => {
-    const obj = {
-      ...roomDetails,
-    };
-    obj[key] = value;
-    setRoomDetails(obj);
-  };
-
-  const handleDateAndTimeChange = (key, value, valueStr) => {
-    const obj = {
-      ...roomDetails,
-    };
-    obj[key] = value;
-    obj[`${key}Str`] = JSON.stringify(valueStr);
-    
-    setRoomDetails(obj);
-  };
-
-
-  const createRoom = async () => {
+  const createRoom = async (roomDetails) => {
     try {
       setIsCreatingRoom(true);
       const { data } = await HttpServices.postRequest(CREATE_ROOM_ENDPOINT, {
@@ -149,15 +93,15 @@ const RoomList = () => {
     navigate(`/class-room/${product}/${roomName}/${roomId}`);
   };
 
-
-
   return (
-    <div className="room-list-container">
+    <div className="room-list-container" id="room-list-container">
       <div className="btn-container">
-        <div className="room-title" level={5}>{`Room List`}</div>
-        {showCreateRoomBtn && <Button onClick={() => setShowCreateRoomModal(true)}>
-          {createRoomHeadingAndLabel}
-        </Button>}
+        <div className="room-title">{`Room List`}</div>
+        {showCreateRoomBtn && (
+          <Button type="primary" onClick={() => setShowCreateRoomModal(true)}>
+            {createRoomHeadingAndLabel}
+          </Button>
+        )}
       </div>
 
       {isroomListLoading ? (
@@ -165,7 +109,7 @@ const RoomList = () => {
           <Spin tip="Loading..." size="large" />
         </div>
       ) : (
-        <div>
+        <>
           <div className="room-list">
             {roomList.map((roomObj) => (
               <RoomBlock
@@ -185,61 +129,15 @@ const RoomList = () => {
               <Title level={3}>No Class Room found</Title>
             </div>
           )}
-        </div>
+        </>
       )}
 
-      <Modal
-        title={createRoomHeadingAndLabel}
-        open={showCreateRoomModal}
-        onOk={handleCreateRoomSubmit}
-        onCancel={() => setShowCreateRoomModal(false)}
-        okButtonProps={{ disabled: isCreatingRoom }}
-        cancelButtonProps={{ disabled: isCreatingRoom }}
-        okText="Submit"
-        confirmLoading={isCreatingRoom}
-      >
-        <Form
-          onFinish={handleCreateRoomSubmit}
-          //   {...formItemLayout}
-          layout="vertical"
-          form={form}
-        >
-          <InputWithLabel
-            label="Name"
-            value={roomDetails.name}
-            onInputChange={(e) => handleInputChange("name", e.target.value)}
-            placeholder="Enter Room Name"
-            helperText={errors.name}
-            showError={showErrors.name}
-          />
-          <InputWithLabel
-            label="Description"
-            value={roomDetails.description}
-            onInputChange={(e) =>
-              handleInputChange("description", e.target.value)
-            }
-            placeholder="Enter Room Description"
-            helperText={errors.description}
-            showError={showErrors.description}
-          />
-          <div className="date-time">
-            <Space className="vertical">
-              <Text>Date</Text>
-              <DatePicker
-                onChange={(dateValue, dateStr) => handleDateAndTimeChange("date",  dateValue, dateStr)}
-                value={roomDetails.date}
-              />
-            </Space>
-            <Space className="vertical">
-              <Text>Start and End Time</Text>
-              <TimePicker.RangePicker
-                onChange={(value, str) => handleDateAndTimeChange("time", value, str)}
-                value={roomDetails.time}
-              />
-            </Space>
-          </div>
-        </Form>
-      </Modal>
+      <AddRoomModal
+        showCreateRoomModal={showCreateRoomModal}
+        handleCreateRoomSubmit={createRoom}
+        handleCloseCreateRoomModal={() => setShowCreateRoomModal(false)}
+        isCreatingRoom={isCreatingRoom}
+      />
     </div>
   );
 };

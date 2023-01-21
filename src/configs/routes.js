@@ -4,6 +4,7 @@ import Home from "./../containers/Home";
 import RoomList from "./../containers/RoomList/";
 import InteractiveClass from "../containers/InteractiveClass";
 import Authentication from "../components/Hoc";
+import LandingPage from "../containers/Landing/landing";
 
 const appRoutes = [
   {
@@ -21,6 +22,11 @@ const appRoutes = [
   {
     path: "/",
     component: Authentication(Home),
+  },
+  {
+    // path: "/le",
+    path: "/home/room-list/:product",
+    component: Authentication(LandingPage),
   },
 ];
 

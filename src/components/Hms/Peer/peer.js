@@ -11,9 +11,9 @@ function Peer({ peer }) {
       <div className="peer-video-container">
         <div className="peer-avatar-container">
           <Avatar
-            className="room-block-image"
             style={{
               backgroundColor: getRandomAvatarColor(peer.id),
+              transform: 'scale(1.5)'
             }}
             size="large"
           >

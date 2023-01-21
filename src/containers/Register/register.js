@@ -1,16 +1,20 @@
-import { Form, Button, message, Checkbox } from "antd";
+import { Form, Button, message } from "antd";
 import InputWithLabel from "../../components/InputWithLabel";
 import { useState, useEffect } from "react";
 import HttpServices from "../../configs/https.service";
-import { FETCH_ALL_ROLES_ENDPOINT } from "./../../configs/apiEndpoints";
+import {
+  REGISTER_ENDPOINT,
+} from "./../../configs/apiEndpoints";
 import "./register.css";
 import {
   userNamePolicy,
   passwordPolicy,
   rePasswordPolicy,
-  rolesPolicy,
   emailPolicy,
 } from "../../utils/userSignPolicies";
+import { EMPTY_FIELD_ERROR, FIX_ERRORS } from "../../configs/constants";
+import { get } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   userName: "",
@@ -19,26 +23,44 @@ const initialState = {
   rePassword: "",
   name: "",
 };
-const CheckboxGroup = Checkbox.Group;
 
 const Register = () => {
   const [form] = Form.useForm();
   const [userDataObj, setUserDataObj] = useState(initialState);
   const [errors, setErrors] = useState(initialState);
-  const [availableRoles, setAvailableRoles] = useState(["Guest"]);
   const [showErrors, setShowErrors] = useState({});
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetchAllRoles();
+    // fetchAllRoles();
   }, []);
 
-  const handleSubmit = () => {
-    const initialErrors = {
-      ...initialState,
-    };
-    Object.keys(initialErrors).forEach((key) => (initialErrors[key] = true));
-    setShowErrors(initialErrors);
-    checkForErrors(userDataObj);
+  const handleSubmit = async () => {
+    try {
+      const initialErrors = {
+        ...initialState,
+      };
+      Object.keys(initialErrors).forEach((key) => (initialErrors[key] = true));
+      setShowErrors(initialErrors);
+      checkForErrors(userDataObj);
+      if (Object.values(errors).filter(Boolean).length) {
+        message.warning(FIX_ERRORS);
+        checkForErrors(userDataObj);
+        return;
+      }
+      const result = await HttpServices.postRequest(
+        REGISTER_ENDPOINT,
+        userDataObj
+      );
+      const token = get(result, ["data", "accessToken"]);
+      localStorage.setItem("authToken", token);
+      navigate(`/home/room-list/Lingala`);
+      console.log("F-4", result);
+    } catch (e) {
+      console.error(e);
+      message.error(get(e, ["response", "data", "error"]));
+    }
   };
 
   const handleInputChange = (key, value) => {
@@ -64,24 +86,14 @@ const Register = () => {
       userDataObj.rePassword
     );
     const email = emailPolicy(userDataObj.email);
-    const roles = rolesPolicy(userDataObj.roles);
+    const name = !userDataObj.name ? EMPTY_FIELD_ERROR : null;
     setErrors({
       userName,
       password,
       rePassword,
-      roles,
-      email
+      email,
+      name,
     });
-  };
-
-  const fetchAllRoles = async () => {
-    try {
-      const result = await HttpServices.getRequest(FETCH_ALL_ROLES_ENDPOINT);
-      const roles = result.data.map((roleObj) => roleObj.role);
-      setAvailableRoles(roles);
-    } catch (e) {
-      console.error(e);
-    }
   };
 
   return (
@@ -94,6 +106,14 @@ const Register = () => {
           placeholder="Enter email"
           helperText={errors.email}
           showError={showErrors.email}
+        />
+        <InputWithLabel
+          label="Name"
+          value={userDataObj.name}
+          onInputChange={(e) => handleInputChange("name", e.target.value)}
+          placeholder="Enter Name"
+          helperText={errors.name}
+          showError={showErrors.name}
         />
         <InputWithLabel
           label="User Name"

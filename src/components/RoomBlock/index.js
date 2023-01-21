@@ -1,3 +1,3 @@
-import RoomBlock from "./roomBlock";
+import RoomBlock from "./roomBlock2";
 
 export default RoomBlock;

@@ -16,16 +16,14 @@ import {
   TbMicrophoneOff,
 } from "react-icons/tb";
 import { FaUsersSlash, FaUsers } from "react-icons/fa";
-import {IoIosHand} from 'react-icons/io';
+import { IoIosHand } from "react-icons/io";
 
 function HmsFooter({ showParticipantList, handleShowParticipantList }) {
-  const { isLocalAudioEnabled, toggleAudio } =
-    useAVToggle();
+  const { isLocalAudioEnabled, toggleAudio } = useAVToggle();
   const amIScreenSharing = useHMSStore(selectIsLocalScreenShared);
   const publishPermissions = useHMSStore(selectIsAllowedToPublish);
   const localPeer = useHMSStore(selectLocalPeer);
-  const {isHandRaised = false} = JSON.parse(localPeer?.metadata || "{}")
-
+  const { isHandRaised = false } = JSON.parse(localPeer?.metadata || "{}");
 
   const { screen: isScreenShareAllowed, audio: isEnablingAudioAllowed } =
     publishPermissions;
@@ -50,13 +48,18 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
   const handleRaiseHand = async () => {
     const metaData = JSON.parse(localPeer?.metadata || "{}");
     metaData.isHandRaised = !metaData.isHandRaised;
-    hmsActions.changeMetadata( JSON.stringify(metaData))
-  }
+    hmsActions.changeMetadata(JSON.stringify(metaData));
+  };
   const contClassName = `icon-container  complete-center`;
 
   return (
     <div className="control-bar">
-      <span className={`${contClassName} ${isEnablingAudioAllowed ?  null : "disabled1"}`} onClick={toggleAudio}>
+      <span
+        className={`${contClassName} ${
+          isEnablingAudioAllowed ? null : "disabled1"
+        }`}
+        onClick={toggleAudio}
+      >
         {isLocalAudioEnabled ? (
           <>
             <TbMicrophone className="st-icon" />
@@ -86,9 +89,12 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
       ) : null}
 
       <span className={contClassName} onClick={handleShowParticipantList}>
-            {showParticipantList ? <FaUsersSlash className="st-icon" /> : <FaUsers className="st-icon" />}
-            <span>Particpants</span>
-          
+        {showParticipantList ? (
+          <FaUsersSlash className="st-icon" />
+        ) : (
+          <FaUsers className="st-icon" />
+        )}
+        <span>Particpants</span>
       </span>
       <span className={contClassName} onClick={handleRaiseHand}>
         {isHandRaised ? (

@@ -4,11 +4,11 @@
     text-align: center;
     align-items: center;
     gap: 5px;
-    background-color: rgb(69, 69, 69);
+    background-color: rgb(34, 32, 38);
     padding: 30px;
-    border-radius: 8px;
+    border-radius: 25px;
     color: white;
-    width: 140px;
+    width: 170px;
 }
 
 .peer-video {

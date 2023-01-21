@@ -3,16 +3,16 @@ import {
   selectIsConnectedToRoom,
   useHMSActions,
   useHMSStore,
-  selectPeers, 
-  selectLocalPeer
+  selectPeers,
+  selectLocalPeer,
 } from "@100mslive/react-sdk";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useRef,useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HttpServices from "../../configs/https.service";
 import { JOIN_HMS_ROOM_ENDPOINT } from "../../configs/apiEndpoints";
-import Conference from './../../components/Hms/Conference';
-import HmsFooter from './../../components/Hms/Footer';
-import './interactiveClass.css';
+import Conference from "./../../components/Hms/Conference";
+import HmsFooter from "./../../components/Hms/Footer";
+import "./interactiveClass.css";
 import ParticipantList from "../../components/ParticipantList";
 
 const InteractiveClass = () => {
@@ -26,7 +26,7 @@ const InteractiveClass = () => {
   const hmsActions = useHMSActions();
   const navigate = useNavigate();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
-  
+
   useEffect(() => {
     window.onunload = () => {
       if (isConnected) {
@@ -55,8 +55,8 @@ const InteractiveClass = () => {
 
   const handleLeaveRoom = async () => {
     await hmsActions.leave();
-    navigate(`/room-list/${product}`)
-  }
+    navigate(`/home/room-list/Lingala`);
+  };
 
   const getLoader = () => (
     <div className="complete-center">
@@ -65,17 +65,28 @@ const InteractiveClass = () => {
   );
 
   const getClassRoomView = () => {
-    return <>
-    <Conference handleLeaveRoom={handleLeaveRoom}/>
-    <HmsFooter showParticipantList={showParticipantList} handleShowParticipantList={() => setShowParticipantList(true)} />
-    <ParticipantList users={users} showParticipantList={showParticipantList} handleCloseParticipantList={() => setShowParticipantList(false)} />
-    </>
-  }
+    return (
+      <>
+        <Conference handleLeaveRoom={handleLeaveRoom} />
+        <HmsFooter
+          showParticipantList={showParticipantList}
+          handleShowParticipantList={() => setShowParticipantList(true)}
+        />
+        <ParticipantList
+          users={users}
+          showParticipantList={showParticipantList}
+          handleCloseParticipantList={() => setShowParticipantList(false)}
+        />
+      </>
+    );
+  };
   return (
     <div className="interactive-class-container">
-      {!isConnected ? getLoader() : <div className="classroom-container">
-        {getClassRoomView()}
-        </div>}
+      {!isConnected ? (
+        getLoader()
+      ) : (
+        <div className="classroom-container">{getClassRoomView()}</div>
+      )}
     </div>
   );
 };

@@ -27,11 +27,10 @@
   display: flex;
   align-items: center;
   padding: 10px;
-
 }
 
 .room-block-image {
-transform: scale(1.5);
+  transform: scale(3);
 }
 
 .room-info {
