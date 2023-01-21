@@ -19,6 +19,7 @@ const Login = () => {
   const [userDataObj, setUserDataObj] = useState(initialState);
   const [errors, setErrors] = useState(initialState);
   const [showErrors, setShowErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,8 +30,6 @@ const Login = () => {
       userName,
       password,
     });
-    // if (userName || password) return true;
-    // return false;
   };
 
   const handleInputChange = (key, value) => {
@@ -59,11 +58,13 @@ const Login = () => {
       return;
     }
     try {
+      setLoading(true);
       const result = await HttpServices.postRequest(LOGIN_ENPOINT, userDataObj);
       const token = get(result, ['data', 'accessToken']);
       const role = get(result, ['data', 'role']);
       message.success(`Logged In as ${capitalize(role)}`);
       localStorage.setItem('authToken', token);
+      setLoading(false);
       navigate(`/home/room-list/Lingala`)
     } catch (e) {
       console.error(e);
@@ -71,7 +72,6 @@ const Login = () => {
     }
   };
 
-  console.log(errors, Object.values(errors).filter(Boolean),"f-2");
   return (
     <div className="login-form-container">
       <Form
@@ -99,7 +99,7 @@ const Login = () => {
         />
         <Captcha />
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={loading}>
             Sign In
           </Button>
         </Form.Item>

@@ -2,9 +2,7 @@ import { Form, Button, message } from "antd";
 import InputWithLabel from "../../components/InputWithLabel";
 import { useState, useEffect } from "react";
 import HttpServices from "../../configs/https.service";
-import {
-  REGISTER_ENDPOINT,
-} from "./../../configs/apiEndpoints";
+import { REGISTER_ENDPOINT } from "./../../configs/apiEndpoints";
 import "./register.css";
 import {
   userNamePolicy,
@@ -29,12 +27,9 @@ const Register = () => {
   const [userDataObj, setUserDataObj] = useState(initialState);
   const [errors, setErrors] = useState(initialState);
   const [showErrors, setShowErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // fetchAllRoles();
-  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -49,14 +44,15 @@ const Register = () => {
         checkForErrors(userDataObj);
         return;
       }
+      setLoading(true);
       const result = await HttpServices.postRequest(
         REGISTER_ENDPOINT,
         userDataObj
       );
       const token = get(result, ["data", "accessToken"]);
       localStorage.setItem("authToken", token);
+      setLoading(false);
       navigate(`/home/room-list/Lingala`);
-      console.log("F-4", result);
     } catch (e) {
       console.error(e);
       message.error(get(e, ["response", "data", "error"]));
@@ -151,7 +147,7 @@ const Register = () => {
         </div> */}
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={loading}>
             Sign Up
           </Button>
         </Form.Item>
