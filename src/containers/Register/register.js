@@ -1,9 +1,8 @@
-import { Form, Button, message, Checkbox } from "antd";
+import { Form, Button, message } from "antd";
 import InputWithLabel from "../../components/InputWithLabel";
 import { useState, useEffect } from "react";
 import HttpServices from "../../configs/https.service";
 import {
-  FETCH_ALL_ROLES_ENDPOINT,
   REGISTER_ENDPOINT,
 } from "./../../configs/apiEndpoints";
 import "./register.css";
@@ -11,7 +10,6 @@ import {
   userNamePolicy,
   passwordPolicy,
   rePasswordPolicy,
-  rolesPolicy,
   emailPolicy,
 } from "../../utils/userSignPolicies";
 import { EMPTY_FIELD_ERROR, FIX_ERRORS } from "../../configs/constants";
@@ -97,16 +95,6 @@ const Register = () => {
       name,
     });
   };
-
-  // const fetchAllRoles = async () => {
-  //   try {
-  //     const result = await HttpServices.getRequest(FETCH_ALL_ROLES_ENDPOINT);
-  //     const roles = result.data.map((roleObj) => roleObj.role);
-  //     setAvailableRoles(roles);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
 
   return (
     <div className="login-form-container">
