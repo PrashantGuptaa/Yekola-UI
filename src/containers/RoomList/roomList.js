@@ -26,7 +26,7 @@ import RoomBlock from "../../components/RoomBlock";
 import roomNotFound from "../../assets/images/roomNotFound.png";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import moment from 'moment';
+import moment from "moment";
 
 const { Title, Text } = Typography;
 dayjs.extend(customParseFormat);
@@ -47,7 +47,7 @@ const RoomList = () => {
   useEffect(() => {
     fetchRoomsList();
     checkCreateRoomAccess();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [form] = Form.useForm();
@@ -63,7 +63,7 @@ const RoomList = () => {
     } catch (e) {
       console.error("Error while verfiying if user can create room", e);
     }
-  }
+  };
 
   const handleCreateRoomSubmit = () => {
     if (checkForErrors()) {
@@ -107,15 +107,29 @@ const RoomList = () => {
   };
 
   const handleDateAndTimeChange = (key, value, valueStr) => {
+    console.log("F-4", key, value, valueStr);
     const obj = {
       ...roomDetails,
     };
     obj[key] = value;
-    obj[`${key}Str`] = JSON.stringify(valueStr);
-    
+    // obj[`${key}Str`] = JSON.stringify(valueStr);
+
     setRoomDetails(obj);
   };
 
+  const handleTimeChange = (key, value) => {
+    console.log("F-4", key, new Date(value));
+    const obj = {
+      ...roomDetails,
+    };
+    obj[key] = value;
+
+    setRoomDetails(obj);
+  };
+
+  console.log("F-4-2", roomDetails);
+
+  // const handleTimeChange
 
   const createRoom = async () => {
     try {
@@ -149,15 +163,15 @@ const RoomList = () => {
     navigate(`/class-room/${product}/${roomName}/${roomId}`);
   };
 
-
-
   return (
-    <div className="room-list-container">
+    <div className="room-list-container" id="room-list-container">
       <div className="btn-container">
-        <div className="room-title" level={5}>{`Room List`}</div>
-        {showCreateRoomBtn && <Button onClick={() => setShowCreateRoomModal(true)}>
-          {createRoomHeadingAndLabel}
-        </Button>}
+        <div className="room-title">{`Room List`}</div>
+        {showCreateRoomBtn && (
+          <Button type="primary" onClick={() => setShowCreateRoomModal(true)}>
+            {createRoomHeadingAndLabel}
+          </Button>
+        )}
       </div>
 
       {isroomListLoading ? (
@@ -197,6 +211,7 @@ const RoomList = () => {
         cancelButtonProps={{ disabled: isCreatingRoom }}
         okText="Submit"
         confirmLoading={isCreatingRoom}
+        width={400}
       >
         <Form
           onFinish={handleCreateRoomSubmit}
@@ -224,16 +239,41 @@ const RoomList = () => {
           />
           <div className="date-time">
             <Space className="vertical">
-              <Text>Date</Text>
+              <Text>Start Date</Text>
               <DatePicker
-                onChange={(dateValue, dateStr) => handleDateAndTimeChange("date",  dateValue, dateStr)}
+                onChange={(dateValue) =>
+                  handleInputChange("startDate", dateValue)
+                }
                 value={roomDetails.date}
               />
             </Space>
             <Space className="vertical">
-              <Text>Start and End Time</Text>
-              <TimePicker.RangePicker
-                onChange={(value, str) => handleDateAndTimeChange("time", value, str)}
+              <Text>End Date</Text>
+              <DatePicker
+                onChange={(dateValue) =>
+                  handleInputChange("endDate", dateValue)
+                }
+                value={roomDetails.date}
+              />
+            </Space>
+          </div>
+          <div className="date-time">
+            <Space className="vertical">
+              <Text>Start Time</Text>
+              <TimePicker
+                onChange={(value, str) =>
+                  handleInputChange("startTime", value, str)
+                }
+                value={roomDetails.time}
+                // disabledSeconds={true}
+              />
+            </Space>
+            <Space className="vertical">
+              <Text>End Time</Text>
+              <TimePicker
+                onChange={(value, str) =>
+                  handleInputChange("endTime", value, str)
+                }
                 value={roomDetails.time}
               />
             </Space>

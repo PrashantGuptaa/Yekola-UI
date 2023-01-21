@@ -55,7 +55,7 @@ const InteractiveClass = () => {
 
   const handleLeaveRoom = async () => {
     await hmsActions.leave();
-    navigate(`/room-list/${product}`)
+    navigate(`/home/room-list/Lingala`)
   }
 
   const getLoader = () => (

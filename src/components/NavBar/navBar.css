@@ -20,6 +20,9 @@
     background-color: white !important;
     box-shadow: 1px 0px 2px 0px #d2d2d2;
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
+    height: 8%;
+    padding: 0px 20px;
 }
+

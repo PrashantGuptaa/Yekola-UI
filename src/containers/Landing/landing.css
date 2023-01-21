@@ -1,0 +1,70 @@
+.landing-page-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.first-section {
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px solid rgb(230, 230, 230);
+}
+
+.landing-img-container {
+  width: 40%;
+}
+
+.text-content-container {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-family: "Hind Siliguri", sans-serif;
+}
+
+.img-landing {
+  width: 100%;
+}
+
+.main-heading {
+  font-size: 20px;
+  padding: 5px 0px;
+  font-weight: 600;
+}
+
+.sub-heading {
+  font-size: 18px;
+  padding: 5px 0px;
+  font-weight: 600;
+}
+
+.motivation-heading {
+  font-size: 16px;
+  padding: 10px 0px;
+  font-weight: 600;
+  color: #d99a1c;
+}
+
+@media screen and (max-width: 780px) {
+  .first-section {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .landing-img-container {
+    width: 100%;
+  }
+
+  .text-content-container {
+    width: 100%;
+    display: flex;
+    /* margin-top: 5%; */
+    justify-content: center;
+    flex-direction: column;
+    /* gap: 5px; */
+    /* align-items: center; */
+  }
+}

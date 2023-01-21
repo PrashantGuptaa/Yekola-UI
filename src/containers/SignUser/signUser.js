@@ -33,14 +33,7 @@ const SignUser = () => {
             children: <Register />,
           }
         ]} />
-{/* <Login /> */}
-        {/* <Tabs.TabPane tab="Sign In" key="1">
-          <Login />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Sign Up" key="2">
-          <Register />
-        </Tabs.TabPane> */}
-      </div>
+    </div>
       </div>
      );
 }

@@ -8,6 +8,7 @@ import { LOGIN_ENPOINT } from "../../configs/apiEndpoints";
 import { capitalize, get } from "lodash";
 import { FIX_ERRORS } from "./../../configs/constants";
 import { useNavigate } from 'react-router-dom';
+import Captcha from "../../components/Captcha";
 
 const initialState = {
   userName: null,
@@ -63,7 +64,7 @@ const Login = () => {
       const role = get(result, ['data', 'role']);
       message.success(`Logged In as ${capitalize(role)}`);
       localStorage.setItem('authToken', token);
-      navigate("/")
+      navigate(`/home/room-list/Lingala`)
     } catch (e) {
       console.error(e);
       message.error(get(e, ["response", "data", "error"]));
@@ -96,6 +97,7 @@ const Login = () => {
           helperText={errors.password}
           showError={showErrors.password}
         />
+        <Captcha />
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Sign In
