@@ -64,11 +64,12 @@ const Login = () => {
       const role = get(result, ['data', 'role']);
       message.success(`Logged In as ${capitalize(role)}`);
       localStorage.setItem('authToken', token);
-      setLoading(false);
       navigate(`/home/room-list/Lingala`)
     } catch (e) {
       console.error(e);
       message.error(get(e, ["response", "data", "error"]));
+    } finally {
+      setLoading(false);
     }
   };
 

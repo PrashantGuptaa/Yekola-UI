@@ -51,11 +51,12 @@ const Register = () => {
       );
       const token = get(result, ["data", "accessToken"]);
       localStorage.setItem("authToken", token);
-      setLoading(false);
       navigate(`/home/room-list/Lingala`);
     } catch (e) {
       console.error(e);
       message.error(get(e, ["response", "data", "error"]));
+    } finally {
+      setLoading(false);
     }
   };
 
