@@ -4,8 +4,8 @@ import product from "../../assets/images/product2.png";
 
 import "./roomBlock2.css";
 import Typography from "antd/es/typography/Typography";
-import { Button } from "antd";
 import { HiChevronRight } from "react-icons/hi";
+import moment from "moment";
 
 const { Text } = Typography;
 
@@ -17,11 +17,14 @@ const RoomBlock2 = ({ roomObj, handleJoinRoom }) => {
     createdBy,
     instructor,
     loading,
-    disabled,
     startDateTime,
     endDateTime,
   } = roomObj;
 
+  const isRoomDisabled = (start, end) => moment().isBetween(start, end, "minute", '[]');
+
+  // const disabled = isRoomDisabled(startDateTime, endDateTime);
+const disabled = false;
   const getDate = (dateTime) => {
     if (!dateTime) return "";
     const dateStr = new Date(dateTime).toDateString();
