@@ -2,7 +2,13 @@ import "./peer.css";
 import { Avatar, Button } from "antd";
 import { getNameIntials, getRandomAvatarColor } from "../../../utils/helperFuncs";
 import { getLocalUserName } from './../../../utils/helperFuncs';
-
+import {
+  // Avatar,
+  StyledVideoTile,
+  useBorderAudioLevel,
+  Video,
+  VideoTileStats,
+} from "@100mslive/react-ui";
 function Peer({ peer }) {
 
   console.log("F-4", peer);

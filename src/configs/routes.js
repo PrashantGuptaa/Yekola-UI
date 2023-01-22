@@ -5,29 +5,34 @@ import RoomList from "./../containers/RoomList/";
 import InteractiveClass from "../containers/InteractiveClass";
 import Authentication from "../components/Hoc";
 import LandingPage from "../containers/Landing/landing";
+import NotFound from "../containers/notFound";
 
 const appRoutes = [
   {
     path: "/sign-user",
     component: SignUser,
   },
-  {
-    path: "/room-list/:product",
-    component: Authentication(RoomList),
-  },
+  // {
+  //   path: "/room-list/:product",
+  //   component: Authentication(RoomList),
+  // },
   {
     path: "/class-room/:product/:className/:roomId",
     component: Authentication(InteractiveClass),
   },
-  {
-    path: "/",
-    component: Authentication(Home),
-  },
+  // {
+  //   path: "/",
+  //   component: Authentication(Home),
+  // },
   {
     // path: "/le",
     path: "/home/room-list/:product",
     component: Authentication(LandingPage),
   },
+  {
+    path: '*',
+    component: NotFound
+  }
 ];
 
 export default appRoutes;
