@@ -4,7 +4,7 @@ const NotFound = () => {
   console.log("F-4");
   const navigate = useNavigate();
   useEffect(() => {
-    navigate("/home/room-list/Lingala");
+    navigate("/home/room-list/English");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
