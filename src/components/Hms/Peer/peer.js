@@ -19,7 +19,7 @@ function Peer({ peer }) {
           <Avatar
             style={{
               backgroundColor: getRandomAvatarColor(peer.id),
-              transform: 'scale(1.5)'
+              transform: 'scale(2)'
             }}
             size="large"
           >

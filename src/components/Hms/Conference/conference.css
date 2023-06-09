@@ -1,12 +1,15 @@
 .conference-section {
   width: 100vw;
+  background-color: #242424;
+  height: 100vh;
 }
 
 .room-name {
   height: 50px;
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 
 .peers-container {

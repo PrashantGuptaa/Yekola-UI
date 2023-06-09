@@ -31,12 +31,10 @@ const ParticipantList = ({
   const roleMap = useHMSStore(selectRolesMap);
   const roleChange = useHMSStore(selectRoleChangeRequest);
   const hmsActions = useHMSActions();
-  console.log("F-12 Local permission", permissions, localPeer);
 
   const handleRoleChangeAction = async (id, roleName) => {
     try {
       const result = await hmsActions.changeRole(id, roleName, true);
-      console.log("F-6", result);
     } catch (e) {
       console.error("Error in role change request", e);
     }
@@ -44,7 +42,6 @@ const ParticipantList = ({
 
   const isHandRaisedForThisPeer = (peer) => {
     const peerMetaData = JSON.parse(peer?.metadata || "{}");
-    console.log("Peer meta data f-13", peer, peerMetaData);
     return peerMetaData?.isHandRaised;
   };
   return (

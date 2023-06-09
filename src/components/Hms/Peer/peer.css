@@ -4,11 +4,13 @@
     text-align: center;
     align-items: center;
     gap: 5px;
-    background-color: rgb(34, 32, 38);
+    background-color: rgb(27, 26, 30);
     padding: 30px;
-    border-radius: 25px;
+    border-radius: 15px;
     color: white;
-    width: 170px;
+    width: 150px;
+    height: 150px;
+    justify-content: center;
 }
 
 .peer-video {
@@ -28,5 +30,5 @@
 }
 
 .peer-avatar-container {
-    padding: 20px;
+    padding: 30px;
 }

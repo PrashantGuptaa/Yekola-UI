@@ -3,7 +3,6 @@ import {
   useHMSStore,
   selectIsLocalScreenShared,
   useHMSActions,
-  selectPermissions,
   selectIsAllowedToPublish,
   selectLocalPeer,
 } from "@100mslive/react-sdk";
@@ -28,13 +27,6 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
   const { screen: isScreenShareAllowed, audio: isEnablingAudioAllowed } =
     publishPermissions;
   const hmsActions = useHMSActions();
-
-  console.log(
-    "F-2 Local items",
-    amIScreenSharing,
-    isLocalAudioEnabled,
-    publishPermissions
-  );
 
   const handleScreenShare = async () => {
     try {
