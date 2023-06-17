@@ -9,11 +9,12 @@ import {
   Video,
   VideoTileStats,
 } from "@100mslive/react-ui";
+import { advanceRoles } from "../../../configs/constants";
 function Peer({ peer }) {
 
   console.log("F-4", peer);
   return (
-    <div className="peer-container">
+    <div className={advanceRoles.includes(peer?.roleName) ? "teacher-peer peer-container" : "peer-container"}>
       <div className="peer-video-container">
         <div className="peer-avatar-container">
           <Avatar

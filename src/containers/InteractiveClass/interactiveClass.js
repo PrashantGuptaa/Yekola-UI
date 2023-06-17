@@ -43,6 +43,7 @@ const InteractiveClass = () => {
   }, []);
 
   const joinHmsRoom = async () => {
+    document.getElementsByTagName('body')[0].style.backgroundColor = '#242424';
     const { data } = await HttpServices.getRequest(
       JOIN_HMS_ROOM_ENDPOINT(roomId)
     );
@@ -55,6 +56,7 @@ const InteractiveClass = () => {
 
   const handleLeaveRoom = async () => {
     await hmsActions.leave();
+    document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
     navigate(`/home/room-list/English`);
   };
 

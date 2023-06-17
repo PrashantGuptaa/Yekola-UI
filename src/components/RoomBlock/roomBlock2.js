@@ -41,7 +41,10 @@ const disabled = false;
       <div className="room-details">
         <Text className="class-name">{name}</Text>
         <Text type="secondary">{description}</Text>
-
+        <div className="row">
+          <Text>Instructor:&nbsp; </Text>
+          <Text type="secondary">{instructor}</Text>
+        </div>
         <div className="row">
           <Text>Start:&nbsp; </Text>
           <Text type="secondary">{getDate(startDateTime)}</Text>

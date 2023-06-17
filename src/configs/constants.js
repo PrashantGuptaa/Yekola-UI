@@ -6,3 +6,5 @@ export const ROLES_ERROR = 'Please select atleast one role';
 export const INVALID_EMAIL = 'Invalid Email';
 export const RESERVED_CHARACTERS_ERROR = '"_ (Underscore) and - (Hyphen)" are reserved keyword. Please use any other character';
 export const END_DATE_BEFORE_START_DATE_ERROR = "End Date & time could not be before or equal to start Date";
+
+export const advanceRoles = ['teacher', 'admin', 'moderator'];

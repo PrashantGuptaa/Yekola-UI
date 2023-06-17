@@ -25,10 +25,10 @@ const LandingPage = () => {
             than you know, and capable of more than you imagine
           </Text>
           <Text className="sub-heading" type="secondary">
-            Connect back to your roots Connect back to your roots
+            Connect back to your roots.
           </Text>
           <Text className="motivation-heading">
-            Some other motivational text
+          A person without the knowledge of their past history, origin, and culture is like a tree without roots.
           </Text>
           <div>
             <Button type="primary" onClick={handleStart}>

@@ -19,6 +19,7 @@ import {
   selectRolesMap,
 } from "@100mslive/react-sdk";
 import { IoIosHand } from "react-icons/io";
+import { advanceRoles } from "../../configs/constants";
 
 const ParticipantList = ({
   handleCloseParticipantList,
@@ -44,6 +45,7 @@ const ParticipantList = ({
     const peerMetaData = JSON.parse(peer?.metadata || "{}");
     return peerMetaData?.isHandRaised;
   };
+
   return (
     <Drawer
       title={`Participants (${users.length})`}
@@ -78,11 +80,11 @@ const ParticipantList = ({
               }
               description={<span className="capitalize">{peer.roleName}</span>}
             />
-            {localUserRoleName === "moderator" && localPeerId !== peer.id && (
+            {advanceRoles.includes(localUserRoleName) && localPeerId !== peer.id && (
               <Link>
                 {peer.roleName === "speaker" ? (
                   <span
-                    onClick={() => handleRoleChangeAction(peer.id, "student")}
+                    onClick={() => handleRoleChangeAction(peer.id, "listener")}
                   >
                     Mute
                   </span>
