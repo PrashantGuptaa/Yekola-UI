@@ -42,7 +42,7 @@ const NavBar = () => {
         <div className="header">
           <div
             className="logo-container cursor-pointer"
-            onClick={() => navigate(`/home/room-list/English`)}
+            onClick={() => navigate(`/home/room-list/Yekola`)}
           >
             <img src={logo} alt="Yekola-Logo" className="logo" />
           </div>

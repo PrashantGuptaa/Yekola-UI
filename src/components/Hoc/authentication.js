@@ -29,7 +29,6 @@ const Authentication = (ServedComponent) => {
         const response = await HttpServices.getRequest(
           USER_VALIDATION_ENDPOINT
         );
-        console.log("F-4", response); 
         if (get(response, ['data', 'authenticated'])) {
           setIsUserAuthenticated(true);
           return;

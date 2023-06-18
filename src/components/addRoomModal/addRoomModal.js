@@ -67,7 +67,6 @@ const AddRoomModal = ({
     const formattedEndDateTime = endDateTime.format();
 
 
-    // console.log("F-5",sd, ed , moment(ed).isSameOrBefore(sd, 'm') )
     if (formattedStartDateTime && formattedEndDateTime && moment(formattedEndDateTime).isSameOrBefore(formattedStartDateTime, 'm')) {
         errorsMessage.startDateTime = END_DATE_BEFORE_START_DATE_ERROR;
         errorsMessage.endDateTime = END_DATE_BEFORE_START_DATE_ERROR;
@@ -87,7 +86,6 @@ const AddRoomModal = ({
     handleCreateRoomSubmit(roomDetails);
   };
 
-  console.log("Room -details f-41", roomDetails);
   return (
     <Modal
       title={"Create Room"}

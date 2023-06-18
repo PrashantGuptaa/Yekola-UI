@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 const NotFound = () => {
-  console.log("F-4");
   const navigate = useNavigate();
   useEffect(() => {
-    navigate("/home/room-list/English");
+    navigate("/home/room-list/Yekola");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

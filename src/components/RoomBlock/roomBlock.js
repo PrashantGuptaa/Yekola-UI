@@ -16,7 +16,6 @@ const RoomBlock = ({ roomObj, handleJoinRoom }) => {
     dateStr,
   } = roomObj;
 
-  console.log("F-1", roomObj);
 
   const getInstructorName = () => instructor || createdBy;
 

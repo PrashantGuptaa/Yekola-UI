@@ -57,7 +57,7 @@ const InteractiveClass = () => {
   const handleLeaveRoom = async () => {
     await hmsActions.leave();
     document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
-    navigate(`/home/room-list/English`);
+    navigate(`/home/room-list/Yekola`);
   };
 
   const getLoader = () => (

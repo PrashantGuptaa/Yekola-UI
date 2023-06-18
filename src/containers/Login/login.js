@@ -64,7 +64,7 @@ const Login = () => {
       const role = get(result, ['data', 'role']);
       message.success(`Logged In as ${capitalize(role)}`);
       localStorage.setItem('authToken', token);
-      navigate(`/home/room-list/English`)
+      navigate(`/home/room-list/Yekola`)
     } catch (e) {
       console.error(e);
       message.error(get(e, ["response", "data", "error"]));

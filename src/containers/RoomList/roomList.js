@@ -1,21 +1,11 @@
 import {
   Button,
   Spin,
-  Modal,
-  Form,
   Typography,
-  DatePicker,
-  Space,
-  TimePicker,
 } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./roomList.css";
 import { useState, useEffect } from "react";
-import InputWithLabel from "../../components/InputWithLabel";
-import {
-  EMPTY_FIELD_ERROR,
-  RESERVED_CHARACTERS_ERROR,
-} from "../../configs/constants";
 import HttpServices from "../../configs/https.service";
 import {
   CREATE_ROOM_AUTH_ENDPOINT,
@@ -26,7 +16,6 @@ import RoomBlock from "../../components/RoomBlock";
 import roomNotFound from "../../assets/images/roomNotFound.png";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import moment from "moment";
 import AddRoomModal from "../../components/addRoomModal";
 
 const { Title, Text } = Typography;
@@ -64,15 +53,14 @@ const RoomList = () => {
   const createRoom = async (roomDetails) => {
     try {
       setIsCreatingRoom(true);
-      const { data } = await HttpServices.postRequest(CREATE_ROOM_ENDPOINT, {
+       await HttpServices.postRequest(CREATE_ROOM_ENDPOINT, {
         ...roomDetails,
         product,
       });
-      const roomListCopy = [data, ...roomList];
-      setRoomList(roomListCopy);
     } catch (e) {
       console.error(e);
     } finally {
+      await fetchRoomsList();
       setIsCreatingRoom(false);
       setShowCreateRoomModal(false);
     }

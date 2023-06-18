@@ -1,5 +1,5 @@
 // import product from '../../assets/images/product1.png';
-import product from "../../assets/images/product2.png";
+import product from "../../assets/images/product4.png";
 // import product from '../../assets/images/product3.png';
 
 import "./roomBlock2.css";
