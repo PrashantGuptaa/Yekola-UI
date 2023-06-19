@@ -1,8 +1,4 @@
-import {
-  Button,
-  Spin,
-  Typography,
-} from "antd";
+import { Button, Spin, Typography } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./roomList.css";
 import { useState, useEffect } from "react";
@@ -32,6 +28,7 @@ const RoomList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.getElementsByTagName("body")[0].style.backgroundColor = "white";
     fetchRoomsList();
     checkCreateRoomAccess();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +50,7 @@ const RoomList = () => {
   const createRoom = async (roomDetails) => {
     try {
       setIsCreatingRoom(true);
-       await HttpServices.postRequest(CREATE_ROOM_ENDPOINT, {
+      await HttpServices.postRequest(CREATE_ROOM_ENDPOINT, {
         ...roomDetails,
         product,
       });
