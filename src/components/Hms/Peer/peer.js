@@ -18,9 +18,9 @@ function Peer({ peer }) {
   return (
     <div
       className={
-        advanceRoles.includes(peer?.roleName)
+        `${advanceRoles.includes(peer?.roleName)
           ? "teacher-peer peer-container"
-          : "peer-container"
+          : "peer-container"} ${isLocalVideoEnabled ? 'no-padding' : null}`
       }
     >
       <div className="peer-video-container">
