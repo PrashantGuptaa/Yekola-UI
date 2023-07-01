@@ -37,12 +37,16 @@
 }
 
 .peer-avatar-container {
-    /* padding: 150px 30px; */
+    padding: 30px;
 }
 
-.peer-name {
-    /* position: absolute; */
-    /* margin-top: 150px; */
+.teacher-peer-avatar-container {
+    padding: 150px 30px;
+}
+
+.teacher-peer-name {
+    position: absolute;
+    margin-top: 150px;
 }
 
 @media screen and (max-width: 768px) {

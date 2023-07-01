@@ -33,7 +33,9 @@ function Peer({ peer }) {
             playsInline
           />
         ) : (
-          <div className="peer-avatar-container">
+          <div className={`peer-avatar-container ${advanceRoles.includes(peer?.roleName)
+            ? "teacher-avatar-container"
+            : null}`   }>
             <Avatar
               style={{
                 backgroundColor: getRandomAvatarColor(peer.id),
@@ -46,7 +48,11 @@ function Peer({ peer }) {
           </div>
         )}
       </div>
-      <div className="peer-name">{getLocalUserName(peer)}</div>
+      <div    className={
+        advanceRoles.includes(peer?.roleName)
+          ? "teacher-peer-name"
+          : "peer-name"
+      }>{getLocalUserName(peer)}</div>
     </div>
   );
 }
