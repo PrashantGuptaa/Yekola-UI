@@ -5,7 +5,7 @@
     align-items: center;
     gap: 5px;
     background-color: rgb(27, 26, 30);
-    padding: 30px;
+    /* padding: 30px; */
     border-radius: 15px;
     color: white;
     width: 150px;
@@ -22,10 +22,11 @@
 .peer-video {
     height: 100%;
     width: 100%;
+    object-fit: cover;
     border-radius: 10px;
 }
 
-.peer-vide-container {
+.peer-video-container {
     height: 100%;
     width: 100%;
 }
@@ -36,7 +37,12 @@
 }
 
 .peer-avatar-container {
-    padding: 30px;
+    padding: 150px 30px;
+}
+
+.peer-name {
+    position: absolute;
+    margin-top: 150px;
 }
 
 @media screen and (max-width: 768px) {

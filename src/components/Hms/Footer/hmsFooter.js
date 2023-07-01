@@ -14,18 +14,23 @@ import {
   TbMicrophone,
   TbMicrophoneOff,
 } from "react-icons/tb";
+import { BsCameraVideo, BsCameraVideoOff } from 'react-icons/bs';
 import { FaUsersSlash, FaUsers } from "react-icons/fa";
 import { IoIosHand } from "react-icons/io";
 
 function HmsFooter({ showParticipantList, handleShowParticipantList }) {
-  const { isLocalAudioEnabled, toggleAudio } = useAVToggle();
+  const { isLocalAudioEnabled, toggleAudio, isLocalVideoEnabled, toggleVideo } =
+    useAVToggle();
   const amIScreenSharing = useHMSStore(selectIsLocalScreenShared);
   const publishPermissions = useHMSStore(selectIsAllowedToPublish);
   const localPeer = useHMSStore(selectLocalPeer);
   const { isHandRaised = false } = JSON.parse(localPeer?.metadata || "{}");
 
-  const { screen: isScreenShareAllowed, audio: isEnablingAudioAllowed } =
-    publishPermissions;
+  const {
+    screen: isScreenShareAllowed,
+    audio: isEnablingAudioAllowed,
+    video: isEnablingVideoAllowed,
+  } = publishPermissions;
   const hmsActions = useHMSActions();
 
   const handleScreenShare = async () => {
@@ -63,7 +68,24 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
             <span>Unmute</span>
           </>
         )}
+
+  
       </span>
+      {isEnablingVideoAllowed ? (
+          <span className={contClassName} onClick={toggleVideo}>
+            {isLocalVideoEnabled ? (
+              <>
+                <BsCameraVideoOff className="st-icon" />
+                <span>HIde</span>
+              </>
+            ) : (
+              <>
+                <BsCameraVideo className="st-icon" />
+                <span>Video</span>
+              </>
+            )}
+          </span>
+        ) : null}
       {isScreenShareAllowed ? (
         <span className={contClassName} onClick={handleScreenShare}>
           {amIScreenSharing ? (
