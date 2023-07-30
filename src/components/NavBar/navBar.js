@@ -3,10 +3,9 @@ import { Dropdown, Avatar } from "antd";
 import React, {  useEffect, useState } from "react";
 
 import "./navBar.css";
-import logo from "../../assets/images/slogo.png";
+import logo from "../../assets/images/yekola.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
-import { ProductContext } from "./../../App";
 
 const NavBar = () => {
   const [showNavBar, setShowNavBar] = useState(true);

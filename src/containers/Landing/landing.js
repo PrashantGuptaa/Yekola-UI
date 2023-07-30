@@ -1,7 +1,7 @@
 import landingImg from "../../assets/images/reading.jpg";
 import "./landing.css";
 // import landingImg2 from '../../assets/images/reading2.jpg';
-import landingImg2 from "../../assets/images/study.png";
+import landingImg2 from "../../assets/images/lk.png";
 import { Button, Typography } from "antd";
 import { HiChevronRight } from "react-icons/hi";
 import RoomList from "../RoomList";
@@ -21,14 +21,13 @@ const LandingPage = () => {
       <div className="first-section">
         <div className="text-content-container">
           <Text level={3} className="main-heading">
-            Believe in yourself. You are braver than you think, more talented
-            than you know, and capable of more than you imagine
+          Welcome/Bienvenue Bana Mboka!
           </Text>
           <Text className="sub-heading" type="secondary">
-            Connect back to your roots.
-          </Text>
+          This is a judgement free learning space.
+            </Text>
           <Text className="motivation-heading">
-          A person without the knowledge of their past history, origin, and culture is like a tree without roots.
+          {`Our mission is to teach, learn & connect you all to preserve our languages.`}
           </Text>
           <div>
             <Button type="primary" onClick={handleStart}>
