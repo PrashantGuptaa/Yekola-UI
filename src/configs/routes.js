@@ -6,6 +6,9 @@ import InteractiveClass from "../containers/InteractiveClass";
 import Authentication from "../components/Hoc";
 import LandingPage from "../containers/Landing/landing";
 import NotFound from "../containers/notFound";
+import Otp from "../containers/Otp";
+import InActiveAccount from "../containers/InactiveAccount";
+import Profile from "../containers/Profile";
 
 const appRoutes = [
   {
@@ -30,9 +33,21 @@ const appRoutes = [
     component: Authentication(LandingPage),
   },
   {
-    path: '*',
-    component: NotFound
-  }
+    path: "/:token/:otp",
+    component: Otp,
+  },
+  {
+    path: "/account",
+    component: InActiveAccount,
+  },
+  {
+    path: "/profile",
+    component: Authentication(Profile),
+  },
+  {
+    path: "*",
+    component: NotFound,
+  },
 ];
 
 export default appRoutes;

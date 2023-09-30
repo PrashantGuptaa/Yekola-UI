@@ -13,6 +13,8 @@
 
 .input-container {
     height: 95px;
+    display: flex;
+    flex-direction: column;
 }
 
 .required {

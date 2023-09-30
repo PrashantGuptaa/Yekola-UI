@@ -43,7 +43,7 @@ const disabled = false;
         <Text type="secondary">{description}</Text>
         <div className="row">
           <Text>Instructor:&nbsp; </Text>
-          <Text type="secondary">{instructor}</Text>
+          <Text type="secondary">{instructor?.name}</Text>
         </div>
         <div className="row">
           <Text>Start:&nbsp; </Text>

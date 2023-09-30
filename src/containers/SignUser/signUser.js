@@ -1,7 +1,6 @@
 import { Tabs } from 'antd';
 import Register from '../Register';
 import Login from '../Login';
-import loginImg from '../../assets/images/loginbg.png';
 import login1 from '../../assets/images/login.png';
 import login2 from '../../assets/images/login2.png';
 

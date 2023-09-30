@@ -12,4 +12,3 @@ root.render(
     </HMSRoomProvider>
   </React.StrictMode>
 );
-// npx vs npm

@@ -1,5 +1,5 @@
 import "./peer.css";
-import { Avatar, Button } from "antd";
+import { Avatar, Typography } from "antd";
 import {
   getNameIntials,
   getRandomAvatarColor,
@@ -8,7 +8,27 @@ import { getLocalUserName } from "./../../../utils/helperFuncs";
 import { advanceRoles } from "../../../configs/constants";
 import { useVideo, useAVToggle } from "@100mslive/react-sdk";
 
+const { Title } = Typography;
+
 function Peer({ peer }) {
+  
+  // const SpeechRecognition = window.webkitSpeechRecognition;
+  // const speech = new SpeechRecognition();
+  // speech.continuous = true;
+
+  // speech.start();
+  // console.log("F-8", speech);
+  // speech.onresult = (event) => {
+  //   console.log("sPEACH EVENT-1 F-5", event);
+  // };
+
+  // speech.onstart = () => {
+  //   console.log("Speaking facts f-23");
+  // };
+
+  // speech.onend = () => {
+  //   console.log("Done Speaking facts f-23");
+  // };
   const { isLocalVideoEnabled } = useAVToggle();
 
   const { videoRef } = useVideo({
@@ -17,11 +37,11 @@ function Peer({ peer }) {
 
   return (
     <div
-      className={
-        `${advanceRoles.includes(peer?.roleName)
+      className={`${
+        advanceRoles.includes(peer?.roleName)
           ? "teacher-peer peer-container"
-          : "peer-container"} ${isLocalVideoEnabled ? 'no-padding' : null}`
-      }
+          : "peer-container"
+      } ${isLocalVideoEnabled ? "no-padding" : null}`}
     >
       <div className="peer-video-container">
         {isLocalVideoEnabled ? (
@@ -33,9 +53,7 @@ function Peer({ peer }) {
             playsInline
           />
         ) : (
-          <div className={`peer-avatar-container ${advanceRoles.includes(peer?.roleName)
-            ? "teacher-avatar-container"
-            : null}`   }>
+          <div className={`peer-avatar-container`}>
             <Avatar
               style={{
                 backgroundColor: getRandomAvatarColor(peer.id),
@@ -48,11 +66,12 @@ function Peer({ peer }) {
           </div>
         )}
       </div>
-      <div    className={
-        advanceRoles.includes(peer?.roleName)
-          ? "teacher-peer-name"
-          : "peer-name"
-      }>{getLocalUserName(peer)}</div>
+      <Title
+        level={advanceRoles.includes(peer?.roleName) ? 4 : 5}
+        className="peer-name"
+      >
+        {getLocalUserName(peer)}
+      </Title>
     </div>
   );
 }

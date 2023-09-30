@@ -1,11 +1,10 @@
-import landingImg from "../../assets/images/reading.jpg";
-import "./landing.css";
-// import landingImg2 from '../../assets/images/reading2.jpg';
 import landingImg2 from "../../assets/images/ldk2.avif";
 import { Button, Typography } from "antd";
 import { HiChevronRight } from "react-icons/hi";
 import RoomList from "../RoomList";
 import { useRef } from 'react';
+import "./landing.css";
+
 const { Text } = Typography;
 
 const LandingPage = () => {

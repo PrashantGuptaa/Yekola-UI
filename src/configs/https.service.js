@@ -3,7 +3,7 @@ import axios from "axios";
 const getCommonHeaders = () => {
   return  {
     "Content-Type": "application/json",
-    'authorization': `Bearer ${localStorage.getItem('authToken')}`
+    'authorization': `${localStorage.getItem('authToken')}`
   }
 }
 

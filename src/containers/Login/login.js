@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import Captcha from "../../components/Captcha";
 
 const initialState = {
-  userName: null,
+  email: null,
   password: null,
 };
 const Login = () => {
@@ -25,9 +25,9 @@ const Login = () => {
 
   const checkForErrors = (userDataObj) => {
     const password = passwordPolicy(userDataObj.password);
-    const userName = userNamePolicy(userDataObj.userName);
+    const email = userNamePolicy(userDataObj.email);
     setErrors({
-      userName,
+      email,
       password,
     });
   };
@@ -60,14 +60,29 @@ const Login = () => {
     try {
       setLoading(true);
       const result = await HttpServices.postRequest(LOGIN_ENPOINT, userDataObj);
-      const token = get(result, ['data', 'accessToken']);
-      const role = get(result, ['data', 'role']);
-      message.success(`Logged In as ${capitalize(role)}`);
+      console.log("F-4", result)
+      const token = get(result, ['data', 'data', 'token']);
+      const active = get(result, ['data',  'data', 'active']);
+      const email = get(result, ['data',  'data', 'email']);
+      const name = get(result, ['data',  'data', 'name']);
+      const role = get(result, ['data',  'data', 'role']);
+
       localStorage.setItem('authToken', token);
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('role', role);
+
+      if (!active) {
+        navigate('/account');
+        return;
+      }
+      message.success(`Welcome to Yekola ${name}`);
       navigate(`/home/room-list/Yekola`)
     } catch (e) {
+      console.log(JSON.stringify(e));
+      console.log(e.response);
       console.error(e);
-      message.error(get(e, ["response", "data", "error"]));
+      message.error(get(e, ["response", "data", "message"]));
     } finally {
       setLoading(false);
     }
@@ -82,12 +97,12 @@ const Login = () => {
         form={form}
       >
         <InputWithLabel
-          label="User Name"
-          value={userDataObj.userName}
-          onInputChange={(e) => handleInputChange("userName", e.target.value)}
-          placeholder="Enter User Name"
-          helperText={errors.userName}
-          showError={showErrors.userName}
+          label="Email"
+          value={userDataObj.email}
+          onInputChange={(e) => handleInputChange("email", e.target.value)}
+          placeholder="Enter email"
+          helperText={errors.email}
+          showError={showErrors.email}
         />
         <InputWithLabel
           type="password"

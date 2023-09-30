@@ -17,6 +17,7 @@ import {
 import { BsCameraVideo, BsCameraVideoOff } from 'react-icons/bs';
 import { FaUsersSlash, FaUsers } from "react-icons/fa";
 import { IoIosHand } from "react-icons/io";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 function HmsFooter({ showParticipantList, handleShowParticipantList }) {
   const { isLocalAudioEnabled, toggleAudio, isLocalVideoEnabled, toggleVideo } =
@@ -47,7 +48,13 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
     metaData.isHandRaised = !metaData.isHandRaised;
     hmsActions.changeMetadata(JSON.stringify(metaData));
   };
+  
+  
+  const { transcript } = useSpeechRecognition()
+console.log("F-1", transcript)
+
   const contClassName = `icon-container  complete-center`;
+
 
   return (
     <div className="control-bar">
@@ -58,15 +65,15 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
         onClick={toggleAudio}
       >
         {isLocalAudioEnabled ? (
-          <>
+          <div  onClick={() => SpeechRecognition.stopListening()}>
             <TbMicrophone className="st-icon" />
             <span>Mute</span>
-          </>
+          </div>
         ) : (
-          <>
-            <TbMicrophoneOff className="st-icon" />
+          <span onClick={() => SpeechRecognition.startListening()}>
+            <TbMicrophoneOff className="st-icon"  />
             <span>Unmute</span>
-          </>
+          </span>
         )}
 
   
@@ -76,7 +83,7 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
             {isLocalVideoEnabled ? (
               <>
                 <BsCameraVideoOff className="st-icon" />
-                <span>HIde</span>
+                <span>Hide</span>
               </>
             ) : (
               <>

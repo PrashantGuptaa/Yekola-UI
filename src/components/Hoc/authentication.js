@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { USER_VALIDATION_ENDPOINT } from "../../configs/apiEndpoints";
 import HttpServices from "../../configs/https.service";
-import { get } from 'lodash';
+import { get } from "lodash";
 
 const Authentication = (ServedComponent) => {
   const UserValidation = () => {
@@ -29,7 +29,7 @@ const Authentication = (ServedComponent) => {
         const response = await HttpServices.getRequest(
           USER_VALIDATION_ENDPOINT
         );
-        if (get(response, ['data', 'authenticated'])) {
+        if (get(response, ["data", "data", "authenticated"])) {
           setIsUserAuthenticated(true);
           return;
         }

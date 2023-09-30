@@ -1,4 +1,4 @@
-import { Button, Spin, Typography } from "antd";
+import { Button, message, Spin, Typography } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./roomList.css";
 import { useState, useEffect } from "react";
@@ -13,6 +13,7 @@ import roomNotFound from "../../assets/images/roomNotFound.png";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import AddRoomModal from "../../components/addRoomModal";
+import { get } from "lodash";
 
 const { Title, Text } = Typography;
 dayjs.extend(customParseFormat);
@@ -23,6 +24,7 @@ const RoomList = () => {
   const [roomList, setRoomList] = useState([]);
   const [isroomListLoading, setIsRoomListLoading] = useState(true);
   const [showCreateRoomBtn, setShowCreateRoomBtn] = useState(false);
+  const [pageNum, setPageNum] = useState(1);
 
   const routeParams = useParams();
   const navigate = useNavigate();
@@ -41,7 +43,7 @@ const RoomList = () => {
   const checkCreateRoomAccess = async () => {
     try {
       const { data } = await HttpServices.getRequest(CREATE_ROOM_AUTH_ENDPOINT);
-      setShowCreateRoomBtn(data.roomEditAllowed);
+      setShowCreateRoomBtn(get(data, ["data", "roomEditAllowed"]));
     } catch (e) {
       console.error("Error while verfiying if user can create room", e);
     }
@@ -56,6 +58,8 @@ const RoomList = () => {
       });
     } catch (e) {
       console.error(e);
+      const errorMsg = get(e, ['response', 'data', 'message']);
+      message.error(errorMsg);
     } finally {
       await fetchRoomsList();
       setIsCreatingRoom(false);
@@ -65,8 +69,9 @@ const RoomList = () => {
 
   const fetchRoomsList = async () => {
     try {
-      const { data } = await HttpServices.getRequest(FETCH_ROOM_LIST(product));
-      setRoomList(data);
+      const { data: { data: roomList } } = await HttpServices.getRequest(FETCH_ROOM_LIST(pageNum, 10));
+      console.log("Room List data , f-4", roomList);
+      setRoomList(roomList);
     } catch (e) {
       console.error(e);
     } finally {

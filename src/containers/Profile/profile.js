@@ -1,0 +1,288 @@
+import { useState, useEffect } from "react";
+import "./profile.css";
+import InputWithLabel from "./../../components/InputWithLabel";
+import {
+  Button,
+  Form,
+  message,
+  Spin,
+  Typography,
+  Input,
+  Modal,
+  Space,
+} from "antd";
+import {
+  languagesOfferedOptions,
+  languagesSpokenOptions,
+  rolesOptions,
+} from "./profileConstants";
+import { ADMIN_ROLE } from "../../configs/constants";
+import HttpServices from "../../configs/https.service";
+import {
+  FETCH_USER_ENDPOINT,
+  UPDATE_PROFILE_IMAGE_ENDPOINT,
+  UPDATE_ROLE_ENDPOINT,
+  UPDATE_USER_ENDPOINT,
+} from "./../../configs/apiEndpoints";
+import { get } from "lodash";
+import SelectWithLabel from "../../components/SelectWithLabel";
+import { useSearchParams } from "react-router-dom";
+
+const { TextArea } = Input;
+
+const Profile = () => {
+  const [userDetails, setUserDetails] = useState({});
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  const [form] = Form.useForm();
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email");
+  const { Title, Text } = Typography;
+
+  useEffect(() => {
+    fetchUserDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchUserDetails = async () => {
+    try {
+      const response = await HttpServices.getRequest(
+        FETCH_USER_ENDPOINT(email)
+      );
+      const user = get(response, ["data", "data"]);
+      setUserDetails(user);
+      setLoading(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleChange = (key, value) => {
+    const userDetailsCopy = { ...userDetails };
+    userDetailsCopy[key] = value;
+    setUserDetails(userDetailsCopy);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const {
+        _id: userId,
+        email,
+        langaugesLearning,
+        langaugesLearnt,
+        role,
+        bio,
+        nationality,
+      } = userDetails;
+      setBtnLoading(true);
+      await HttpServices.patchRequest(UPDATE_USER_ENDPOINT(userId), {
+        langaugesLearning,
+        langaugesLearnt,
+        nationality,
+        bio,
+      });
+      if (localStorage.getItem("role") === ADMIN_ROLE) {
+        await HttpServices.patchRequest(UPDATE_ROLE_ENDPOINT(email), {
+          newRole: role,
+        });
+      }
+      message.success("Successfully updated details");
+    } catch (e) {
+      console.error(e);
+      message.error(get(e, ["response", "data", "message"]));
+    } finally {
+      setBtnLoading(false);
+      handleCloseEditModal();
+    }
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Check if the file size is within the allowed limit (512 KB)
+      if (file.size <= 512 * 1024) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64Image = e.target.result;
+          handleChange("profilePhoto", base64Image);
+          updateprofilePhoto(base64Image);
+          // Send base64Image to your backend API for storage
+          // You can use fetch or any other method to send it to the server
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // Display an error message or take appropriate action
+        message.error(
+          "Image size exceeds the allowed limit (512 KB). Please choose a smaller image."
+        );
+        // alert();
+        // Clear the input field
+        document.getElementById("imageInput").value = "";
+      }
+    }
+  };
+
+  const updateprofilePhoto = async (profilePhoto) => {
+    try {
+      await HttpServices.patchRequest(
+        UPDATE_PROFILE_IMAGE_ENDPOINT(userDetails._id),
+        {
+          profilePhoto,
+        }
+      );
+    } catch (e) {
+      console.error("Error while updating profile photo", e);
+    }
+  };
+
+  // console.log("F-1", userDetails);
+
+  const getView = () => {
+    const {
+      name,
+      profilePhoto,
+      langaugesLearning,
+      langaugesLearnt,
+      userName,
+      bio,
+      nationality,
+    } = userDetails;
+
+    return (
+      <div className="profile-container">
+        <aside className="profile-photo-container">
+          <section
+            className="img-container"
+            onClick={() => document.getElementById("imageInput").click()}
+            style={{ backgroundImage: `url(${profilePhoto})` }}
+          >
+            {profilePhoto ? null : (
+              <span className="upload-text">Click to Upload Image</span>
+            )}
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
+          </section>
+          <div padding="20px"></div>
+          <section className="details">
+            <Button onClick={handleOpenEditModal} type='primary'>Edit Profile</Button>
+            <p>
+              <Text className="name">{`${name} (@${userName})`}</Text>
+            </p>
+            <div style={{ textAlign: "left" }}>
+              <Text>
+                {`Languages Spoken: ${[...(langaugesLearnt || [])].toString()}`}
+              </Text>
+            </div>
+            <div>
+              <Text>
+                {`Languages Learning: ${[
+                  ...(langaugesLearning || []),
+                ].toString()}`}
+              </Text>
+            </div>
+            <div>
+              <Text>{`Nationality:  ${nationality || ""}`}</Text>
+            </div>
+          </section>
+        </aside>
+        <section className="profile-details">
+            <Title level={4}>Bio</Title>
+            <p>
+              <Text type="primary">{bio}</Text>
+            </p>
+        </section>
+      </div>
+    );
+  };
+
+  const getEditModalView = () => {
+    const {
+      role,
+      langaugesLearning,
+      langaugesLearnt,
+      bio,
+      nationality,
+    } = userDetails;
+
+    return (
+      <Modal
+        className="profile-details"
+        title="Edit Details"
+        width={600}
+        open={showEditModal}
+        onCancel={handleCloseEditModal}
+        onOk={handleSubmit}
+        okText="Submit"
+        style={{
+          top: 30,
+        }}
+      >
+        <Form onFinish={handleSubmit} layout="vertical" form={form}>
+          <TextArea
+            placeholder="Bio"
+            value={bio}
+            rows={4}
+            showCount
+            maxLength={200}
+            onChange={(e) => handleChange("bio", e.target.value)}
+          />
+          <br />
+          <InputWithLabel
+            label="Nationality"
+            value={nationality}
+            showCount
+            maxLength={50}
+            placeholder="Enter Nationality"
+            onInputChange={(e) => handleChange("nationality", e.target.value)}
+          />
+
+          {localStorage.getItem("role") === ADMIN_ROLE && (
+            <SelectWithLabel
+              selectedValue={role}
+              disabled={localStorage.getItem("role") !== ADMIN_ROLE}
+              options={rolesOptions}
+              handleChange={(value) => handleChange("role", value)}
+              label="Role"
+            />
+          )}
+          <SelectWithLabel
+            selectedValue={langaugesLearnt}
+            options={languagesSpokenOptions}
+            handleChange={(value) => handleChange("langaugesLearnt", value)}
+            label="Languages learnt"
+            mode="multiple"
+          />
+
+          <SelectWithLabel
+            selectedValue={langaugesLearning}
+            options={languagesOfferedOptions}
+            handleChange={(value) => handleChange("langaugesLearning", value)}
+            label="Languages learning"
+            mode="multiple"
+          />
+        </Form>
+      </Modal>
+    );
+  };
+
+  const handleOpenEditModal = () => setShowEditModal(true);
+
+  const handleCloseEditModal = () => setShowEditModal(false);
+
+  return (
+    <>
+      {loading ? <div className="complete-center"><Spin tip="Loading" size="large" /></div> : getView()}
+      {getEditModalView()}
+    </>
+  );
+};
+
+export default Profile;

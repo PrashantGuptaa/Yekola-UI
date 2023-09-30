@@ -1,4 +1,4 @@
-import { Spin } from "antd";
+import { message, Spin } from "antd";
 import {
   selectIsConnectedToRoom,
   useHMSActions,
@@ -14,6 +14,7 @@ import Conference from "./../../components/Hms/Conference";
 import HmsFooter from "./../../components/Hms/Footer";
 import "./interactiveClass.css";
 import ParticipantList from "../../components/ParticipantList";
+import { get } from "lodash";
 
 const InteractiveClass = () => {
   const [showParticipantList, setShowParticipantList] = useState(false);
@@ -43,15 +44,22 @@ const InteractiveClass = () => {
   }, []);
 
   const joinHmsRoom = async () => {
-    document.getElementsByTagName('body')[0].style.backgroundColor = '#242424';
-    const { data } = await HttpServices.getRequest(
-      JOIN_HMS_ROOM_ENDPOINT(roomId)
-    );
-    const { name: userName, authToken } = data;
-    await hmsActions.join({
-      userName,
-      authToken,
-    });
+    try {
+
+      document.getElementsByTagName('body')[0].style.backgroundColor = '#242424';
+      const response = await HttpServices.getRequest(
+        JOIN_HMS_ROOM_ENDPOINT(roomId)
+        );
+        const authToken = get(response, ['data', 'data', 'roomToken']);
+        // const { name: userName, authToken } = data;
+        await hmsActions.join({
+          userName: localStorage.getItem('name') || "Yekola User",
+          authToken,
+        });
+      } catch (e) {
+        console.error(e);
+        message.error(get(e, ['response', 'data', 'message']));
+      }
   };
 
   const handleLeaveRoom = async () => {

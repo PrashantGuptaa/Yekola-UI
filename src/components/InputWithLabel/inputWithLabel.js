@@ -8,21 +8,29 @@ const InputWithLabel = ({
   placeholder,
   helperText,
   errorLevel = "error",
-  type ='text',
+  type = "text",
   showError = false,
+  disabled = false,
+  maxLength = null,
+  showCount = false
 }) => {
   return (
     <div className="input-container">
       {/* <span className="required">*</span> */}
-    <Form.Item label={label}>
-      <Input
-        placeholder={placeholder}
-        value={value}
-        onChange={onInputChange}
-        type={type}
-      />
-    {showError && <div className={`${errorLevel} helperText`}>{helperText}</div>}
-    </Form.Item>
+      <Form.Item label={label}>
+        <Input
+          placeholder={placeholder}
+          value={value}
+          onChange={onInputChange}
+          type={type}
+          disabled={disabled}
+          maxLength={maxLength}
+          showCount={showCount}
+        />
+        {showError && (
+          <div className={`${errorLevel} helperText`}>{helperText}</div>
+        )}
+      </Form.Item>
     </div>
   );
 };

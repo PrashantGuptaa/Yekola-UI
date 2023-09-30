@@ -1,0 +1,26 @@
+.otp-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 25%;
+  min-height: 65%;
+  gap: 20px;
+  padding: 20px;
+  margin: 20px auto;
+  box-shadow: 1px 1px 1px 1px rgb(234, 234, 234);
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .otp-container {
+    width: 75%;
+    box-shadow: none;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .otp-container {
+    width: 40%;
+    box-shadow: none;
+  }
+}

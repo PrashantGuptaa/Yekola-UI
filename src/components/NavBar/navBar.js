@@ -1,11 +1,9 @@
+import {  useEffect, useState } from "react";
 import { Dropdown, Avatar } from "antd";
-// import logo from "../../assets/images/logo.jpeg";
-import React, {  useEffect, useState } from "react";
-
-import "./navBar.css";
-import logo from "../../assets/images/yekola.png";
-import { useLocation, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
+import { useLocation, useNavigate } from "react-router-dom";
+import logo from "../../assets/images/yekola.png";
+import "./navBar.css";
 
 const NavBar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
@@ -23,13 +21,18 @@ const NavBar = () => {
 
   const userItems = [
     {
-      label: "Logout",
+      label: "Profile",
+      key: "Profile",
+    },{
+      label: "Log Out",
       key: "logout",
     },
   ];
 
   const onClick = ({ key }) => {
     switch (key) {
+      case "Profile":
+        return navigate(`/profile?email=${localStorage.getItem('email')}`)
       default:
         localStorage.clear("authToken");
         navigate("/sign-user");

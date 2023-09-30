@@ -41,16 +41,15 @@
 }
 
 .peer-avatar-container {
-    padding: 30px;
-}
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}   
 
-.teacher-peer-avatar-container {
-    padding: 150px 30px;
-}
-
-.teacher-peer-name {
-    position: absolute;
-    margin-top: 150px;
+.peer-name {
+    color: white !important;
+    bottom: 10px;
 }
 
 @media screen and (max-width: 768px) {

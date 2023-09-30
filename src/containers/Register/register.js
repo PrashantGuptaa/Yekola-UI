@@ -1,6 +1,6 @@
 import { Form, Button, message } from "antd";
 import InputWithLabel from "../../components/InputWithLabel";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import HttpServices from "../../configs/https.service";
 import { REGISTER_ENDPOINT } from "./../../configs/apiEndpoints";
 import "./register.css";
@@ -49,9 +49,9 @@ const Register = () => {
         REGISTER_ENDPOINT,
         userDataObj
       );
-      const token = get(result, ["data", "accessToken"]);
+      const token = get(result, ["data", "data", "token"]);
       localStorage.setItem("authToken", token);
-      navigate(`/home/room-list/Yekola`);
+      navigate(`/account`);
     } catch (e) {
       console.error(e);
       message.error(get(e, ["response", "data", "error"]));

@@ -1,0 +1,29 @@
+.account-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 25%;
+    height: 65%;
+    gap: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 1px 1px 1px 1px rgb(234, 234, 234);
+    border-radius: 5px;
+    /* background-image: url(""); */
+}
+
+@media screen and (max-width: 768px) {
+    .account-container {
+    width: 75%;
+    box-shadow: none;
+
+    }
+}
+
+@media screen and (max-width: 920px) {
+    .account-container {
+    width: 40%;
+    box-shadow: none;
+
+    }
+}
