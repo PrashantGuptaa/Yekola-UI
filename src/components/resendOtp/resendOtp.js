@@ -4,7 +4,7 @@ import HttpServices from "../../configs/https.service";
 import { Button } from "antd";
 
 const ResendOtp = () => {
-  const twoMins = 2000;
+  const twoMins = 120000;
 
   const [disable, setDisable] = useState(true);
   const [timer, setTimer] = useState(twoMins);
@@ -23,9 +23,7 @@ const ResendOtp = () => {
 
   const startTimer = () => {
     timeRef.current.intervalId = setInterval(() => {
-      console.log("Interval", timer);
       if (timeRef.current.timer <= 0) {
-        console.log("Clearing internval");
         clearInterval(timeRef.current.intervalId);
         return;
       }

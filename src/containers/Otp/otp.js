@@ -14,7 +14,6 @@ const Otp = () => {
   const [success, setSuccess] = useState(true);
 
   const { token, otp } = useParams();
-  console.log("token f-2", token)
   // localStorage.setItem("authToken", token);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {

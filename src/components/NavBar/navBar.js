@@ -24,7 +24,7 @@ const NavBar = () => {
       label: "Profile",
       key: "Profile",
     },{
-      label: "Log Out",
+      label: "LogOut",
       key: "logout",
     },
   ];
