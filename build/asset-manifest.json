@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9edd23cc.css",
+    "main.js": "/static/js/main.e63931f0.js",
+    "static/media/yekola.png": "/static/media/yekola.2bd0d99bdc1f0276f755.png",
+    "static/media/logo2.png": "/static/media/logo2.06ead2e20295b45421dc.png",
+    "static/media/roomNotFound.png": "/static/media/roomNotFound.67956009a3bfd9eb00eb.png",
+    "static/media/login.png": "/static/media/login.ce6e09a739a9eec6c5d8.png",
+    "static/media/clock.jpg": "/static/media/clock.2b21e20d21f82d649d17.jpg",
+    "static/media/login2.png": "/static/media/login2.13f214fe07784b3ed0a6.png",
+    "static/media/product4.png": "/static/media/product4.4ee0fc046ceefb02cbe9.png",
+    "static/media/ldk2.avif": "/static/media/ldk2.e5ff7ed4a866fdae83a6.avif",
+    "index.html": "/index.html",
+    "main.9edd23cc.css.map": "/static/css/main.9edd23cc.css.map",
+    "main.e63931f0.js.map": "/static/js/main.e63931f0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9edd23cc.css",
+    "static/js/main.e63931f0.js"
+  ]
+}
