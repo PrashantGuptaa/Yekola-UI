@@ -151,7 +151,7 @@ const Profile = () => {
 
     return (
       <div className="profile-container">
-        <aside className="profile-photo-container">
+        <section className="profile-photo-container">
           <section
             className="img-container"
             onClick={() => document.getElementById("imageInput").click()}
@@ -170,45 +170,51 @@ const Profile = () => {
           </section>
           <div padding="20px"></div>
           <section className="details">
-            {(localStorage.getItem('name') === userDetails.name || localStorage.getItem('role') === ADMIN_ROLE) ? <Button onClick={handleOpenEditModal} type='primary'>Edit Profile</Button> : null}
+            {localStorage.getItem("name") === userDetails.name ||
+            localStorage.getItem("role") === ADMIN_ROLE ? (
+              <Button onClick={handleOpenEditModal} type="primary">
+                Edit Profile
+              </Button>
+            ) : null}
             <p>
               <Text className="name">{`${name} (@${userName})`}</Text>
             </p>
             <div style={{ textAlign: "left" }}>
               <Text>
-                {`Languages Spoken: ${[...(langaugesLearnt || [])].toString()}`}
+                <b>Languages Spoken: </b>
+
+                {`${[...(langaugesLearnt || [])].toString()}`}
               </Text>
             </div>
             <div>
               <Text>
-                {`Languages Learning: ${[
-                  ...(langaugesLearning || []),
-                ].toString()}`}
+                <b>Languages Learning: </b>
+                {`${[...(langaugesLearning || [])].toString()}`}
               </Text>
             </div>
             <div>
-              <Text>{`Nationality:  ${nationality || ""}`}</Text>
+              <Text>
+                <b>Nationality: </b>
+                {`Nationality:  ${nationality || ""}`}
+              </Text>
             </div>
           </section>
-        </aside>
+        </section>
         <section className="profile-details">
-            <Title level={4}>Bio</Title>
-            <p>
-              <Text type="primary">{bio}</Text>
-            </p>
+          <Text>
+            <b>Bio</b>
+          </Text>
+          <p>
+            <Text type="primary">{bio}</Text>
+          </p>
         </section>
       </div>
     );
   };
 
   const getEditModalView = () => {
-    const {
-      role,
-      langaugesLearning,
-      langaugesLearnt,
-      bio,
-      nationality,
-    } = userDetails;
+    const { role, langaugesLearning, langaugesLearnt, bio, nationality } =
+      userDetails;
 
     return (
       <Modal
@@ -277,7 +283,13 @@ const Profile = () => {
 
   return (
     <>
-      {loading ? <div className="complete-center"><Spin tip="Loading" size="large" /></div> : getView()}
+      {loading ? (
+        <div className="complete-center">
+          <Spin tip="Loading" size="large" />
+        </div>
+      ) : (
+        getView()
+      )}
       {getEditModalView()}
     </>
   );

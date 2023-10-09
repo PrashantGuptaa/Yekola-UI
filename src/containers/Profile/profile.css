@@ -29,8 +29,8 @@
 }
 
 .img-container {
-  height: 250px;
-  width: 250px;
+  height: 15vw;
+  width: 15vw;
   border-radius: 150px;
   border: 1px solid rgb(215, 215, 215);
   display: flex;
@@ -74,5 +74,37 @@
 }
 .name {
     font-size: 20px;
-    /* padding: 5px; */
+}
+
+
+
+@media screen and (max-width: 450px) {
+
+  .img-container {
+    height: 75vw;
+    width: 75vw;
+  }
+
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .profile-photo-container {
+    width: 100%;
+    padding: 20px 20px 0px 20px;
+    height: fit-content;
+  }
+
+  .details {
+    width: 70%;
+    padding: 20px 20px 0px 20px;
+  }
+
+  .profile-details {
+    width: 70%;
+    padding: 0;
+  }
 }
