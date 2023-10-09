@@ -65,6 +65,8 @@ const Login = () => {
 
       const active = get(result, ['data',  'data', 'active']);
       const name = get(result, ['data',  'data', 'name']);
+      const profile = get(result, ['data',  'data', 'profile']);
+      localStorage.setItem('profile', profile);
 
       if (!active) {
         navigate('/account');

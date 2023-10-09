@@ -7,6 +7,7 @@ import "./navBar.css";
 
 const NavBar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
+  const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,6 +19,11 @@ const NavBar = () => {
       setShowNavBar(true);
     }
   }, [location.pathname]);
+
+  useEffect(()=> {
+    setProfile(localStorage.getItem('profile'));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage.getItem('profile')]);
 
   const userItems = [
     {
@@ -35,6 +41,10 @@ const NavBar = () => {
         return navigate(`/profile?email=${localStorage.getItem('email')}`)
       default:
         localStorage.clear("authToken");
+        localStorage.clear("profile");
+        localStorage.clear("name");
+        localStorage.clear("role");
+        localStorage.clear("email");
         navigate("/sign-user");
     }
   };
@@ -58,12 +68,13 @@ const NavBar = () => {
                 onClick,
               }}
             >
-              <Avatar
+              { <Avatar
                 size="large"
                 className="cursor-pointer"
                 style={{ backgroundColor: "#87d068" }}
                 icon={<UserOutlined />}
-              />
+                src={profile}
+              />}
             </Dropdown>
           </div>
         </div>

@@ -108,6 +108,7 @@ const Profile = () => {
         reader.onload = (e) => {
           const base64Image = e.target.result;
           handleChange("profilePhoto", base64Image);
+          localStorage.setItem('profile', base64Image);
           updateprofilePhoto(base64Image);
           // Send base64Image to your backend API for storage
           // You can use fetch or any other method to send it to the server
