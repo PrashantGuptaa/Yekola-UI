@@ -38,3 +38,12 @@ export   const getRandomAvatarColor = (id) => {
   }
 
   export const isNumber = (num) =>!isNaN(parseInt(num));
+
+export const setLocalStorageWithUserDetails = (userDetails = {}) => {
+  const { token, email, role, name } = userDetails;
+  localStorage.setItem('authToken', token);
+  localStorage.setItem('name', name);
+  localStorage.setItem('email', email);
+  localStorage.setItem('role', role);
+
+}

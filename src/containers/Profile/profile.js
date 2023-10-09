@@ -138,8 +138,6 @@ const Profile = () => {
     }
   };
 
-  // console.log("F-1", userDetails);
-
   const getView = () => {
     const {
       name,
@@ -172,7 +170,7 @@ const Profile = () => {
           </section>
           <div padding="20px"></div>
           <section className="details">
-            <Button onClick={handleOpenEditModal} type='primary'>Edit Profile</Button>
+            {(localStorage.getItem('name') === userDetails.name || localStorage.getItem('role') === ADMIN_ROLE) ? <Button onClick={handleOpenEditModal} type='primary'>Edit Profile</Button> : null}
             <p>
               <Text className="name">{`${name} (@${userName})`}</Text>
             </p>

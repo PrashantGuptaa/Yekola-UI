@@ -70,7 +70,6 @@ const RoomList = () => {
   const fetchRoomsList = async () => {
     try {
       const { data: { data: roomList } } = await HttpServices.getRequest(FETCH_ROOM_LIST(pageNum, 10));
-      console.log("Room List data , f-4", roomList);
       setRoomList(roomList);
     } catch (e) {
       console.error(e);

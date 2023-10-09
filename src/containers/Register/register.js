@@ -13,6 +13,7 @@ import {
 import { EMPTY_FIELD_ERROR, FIX_ERRORS } from "../../configs/constants";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
+import { setLocalStorageWithUserDetails } from "../../utils/helperFuncs";
 
 const initialState = {
   userName: "",
@@ -49,12 +50,11 @@ const Register = () => {
         REGISTER_ENDPOINT,
         userDataObj
       );
-      const token = get(result, ["data", "data", "token"]);
-      localStorage.setItem("authToken", token);
+      setLocalStorageWithUserDetails(get(result, ['data', 'data']))
       navigate(`/account`);
     } catch (e) {
       console.error(e);
-      message.error(get(e, ["response", "data", "error"]));
+      message.error(get(e, ["response", "data", "message"]));
     } finally {
       setLoading(false);
     }

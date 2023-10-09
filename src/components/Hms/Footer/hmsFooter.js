@@ -49,12 +49,7 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
     hmsActions.changeMetadata(JSON.stringify(metaData));
   };
   
-  
-  const { transcript } = useSpeechRecognition()
-console.log("F-1", transcript)
-
   const contClassName = `icon-container  complete-center`;
-
 
   return (
     <div className="control-bar">

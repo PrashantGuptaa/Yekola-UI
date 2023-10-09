@@ -30,7 +30,6 @@ const Otp = () => {
       // const message = get(result, ['data', 'message']);
       message.success(get(result, ['data', 'message']));
       localStorage.setItem('authToken', authToken);
-      console.log(result);
       setSuccess(true);
     } catch (e) {
       console.error(e);

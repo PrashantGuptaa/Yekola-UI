@@ -11,24 +11,7 @@ import { useVideo, useAVToggle } from "@100mslive/react-sdk";
 const { Title } = Typography;
 
 function Peer({ peer }) {
-  
-  // const SpeechRecognition = window.webkitSpeechRecognition;
-  // const speech = new SpeechRecognition();
-  // speech.continuous = true;
 
-  // speech.start();
-  // console.log("F-8", speech);
-  // speech.onresult = (event) => {
-  //   console.log("sPEACH EVENT-1 F-5", event);
-  // };
-
-  // speech.onstart = () => {
-  //   console.log("Speaking facts f-23");
-  // };
-
-  // speech.onend = () => {
-  //   console.log("Done Speaking facts f-23");
-  // };
   const { isLocalVideoEnabled } = useAVToggle();
 
   const { videoRef } = useVideo({

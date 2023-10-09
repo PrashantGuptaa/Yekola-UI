@@ -9,6 +9,7 @@ import { capitalize, get } from "lodash";
 import { FIX_ERRORS } from "./../../configs/constants";
 import { useNavigate } from 'react-router-dom';
 import Captcha from "../../components/Captcha";
+import { setLocalStorageWithUserDetails } from "../../utils/helperFuncs";
 
 const initialState = {
   email: null,
@@ -60,17 +61,10 @@ const Login = () => {
     try {
       setLoading(true);
       const result = await HttpServices.postRequest(LOGIN_ENPOINT, userDataObj);
-      console.log("F-4", result)
-      const token = get(result, ['data', 'data', 'token']);
-      const active = get(result, ['data',  'data', 'active']);
-      const email = get(result, ['data',  'data', 'email']);
-      const name = get(result, ['data',  'data', 'name']);
-      const role = get(result, ['data',  'data', 'role']);
+      setLocalStorageWithUserDetails(get(result, ['data', 'data']))
 
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
-      localStorage.setItem('role', role);
+      const active = get(result, ['data',  'data', 'active']);
+      const name = get(result, ['data',  'data', 'name']);
 
       if (!active) {
         navigate('/account');
@@ -79,8 +73,6 @@ const Login = () => {
       message.success(`Welcome to Yekola ${name}`);
       navigate(`/home/room-list/Yekola`)
     } catch (e) {
-      console.log(JSON.stringify(e));
-      console.log(e.response);
       console.error(e);
       message.error(get(e, ["response", "data", "message"]));
     } finally {
