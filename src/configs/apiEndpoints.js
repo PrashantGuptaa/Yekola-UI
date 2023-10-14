@@ -13,4 +13,5 @@ export const FETCH_USER_ENDPOINT = (email) => `user/${email}`;
 export const UPDATE_USER_ENDPOINT =  (userId) => `user/${userId}`;
 export const UPDATE_ROLE_ENDPOINT = (email) => `auth/update-role/${email}`
 export const UPDATE_PROFILE_IMAGE_ENDPOINT = (userId)=> `user/upload-image/${userId}`;
+export const SEARCH_USERS_ENDPOINT = (search)=> `user?search=${search}`;
 

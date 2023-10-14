@@ -1,4 +1,4 @@
-import { Button, message, Spin, Typography } from "antd";
+import { Button, message, Spin, Typography, Pagination } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./roomList.css";
 import { useState, useEffect } from "react";
@@ -24,7 +24,11 @@ const RoomList = () => {
   const [roomList, setRoomList] = useState([]);
   const [isroomListLoading, setIsRoomListLoading] = useState(true);
   const [showCreateRoomBtn, setShowCreateRoomBtn] = useState(false);
-  const [pageNum, setPageNum] = useState(1);
+  const [roomPagination, setRoomPagination] = useState({
+    total: 1,
+    defaultCurrent: 1,
+    defaultPageSize: 1,
+  });
 
   const routeParams = useParams();
   const navigate = useNavigate();
@@ -35,6 +39,11 @@ const RoomList = () => {
     checkCreateRoomAccess();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    fetchRoomsList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomPagination.defaultCurrent]);
 
   const { product } = routeParams;
 
@@ -58,7 +67,7 @@ const RoomList = () => {
       });
     } catch (e) {
       console.error(e);
-      const errorMsg = get(e, ['response', 'data', 'message']);
+      const errorMsg = get(e, ["response", "data", "message"]);
       message.error(errorMsg);
     } finally {
       await fetchRoomsList();
@@ -69,7 +78,22 @@ const RoomList = () => {
 
   const fetchRoomsList = async () => {
     try {
-      const { data: { data: roomList } } = await HttpServices.getRequest(FETCH_ROOM_LIST(pageNum, 10));
+      // const {
+      //   data: { data: roomList },
+      // } = await HttpServices.getRequest(FETCH_ROOM_LIST(pageNum, 10));
+      const response = await HttpServices.getRequest(
+        FETCH_ROOM_LIST(
+          roomPagination.defaultCurrent,
+          roomPagination.defaultPageSize
+        )
+      );
+      const roomList = get(response, ["data", "data", "rooms"], []);
+      const roomsCount = get(response, ["data", "data", "roomsCount"]);
+      setRoomPagination({
+        ...roomPagination,
+        total: roomsCount,
+      });
+
       setRoomList(roomList);
     } catch (e) {
       console.error(e);
@@ -80,6 +104,10 @@ const RoomList = () => {
 
   const handleJoinRoom = async (roomId, roomName) => {
     navigate(`/class-room/${product}/${roomName}/${roomId}`);
+  };
+
+  const handlePagination = (defaultCurrent) => {
+    setRoomPagination({ ...roomPagination, defaultCurrent });
   };
 
   return (
@@ -127,6 +155,15 @@ const RoomList = () => {
         handleCloseCreateRoomModal={() => setShowCreateRoomModal(false)}
         isCreatingRoom={isCreatingRoom}
       />
+      <div className="vertical-center">
+        <Pagination
+          total={roomPagination.total}
+          showTotal={(total) => `Total ${total} rooms`}
+          defaultPageSize={roomPagination.defaultPageSize}
+          defaultCurrent={roomPagination.defaultCurrent}
+          onChange={handlePagination}
+        />
+      </div>
     </div>
   );
 };

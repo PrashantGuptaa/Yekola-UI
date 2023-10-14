@@ -45,10 +45,11 @@ const Profile = () => {
   useEffect(() => {
     fetchUserDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [email]);
 
   const fetchUserDetails = async () => {
     try {
+      setLoading(true);
       const response = await HttpServices.getRequest(
         FETCH_USER_ENDPOINT(email)
       );
@@ -57,6 +58,8 @@ const Profile = () => {
       setLoading(false);
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,7 +111,8 @@ const Profile = () => {
         reader.onload = (e) => {
           const base64Image = e.target.result;
           handleChange("profilePhoto", base64Image);
-          localStorage.setItem('profile', base64Image);
+          if (userDetails.userName === localStorage.getItem("userName"))
+            localStorage.setItem("profile", base64Image);
           updateprofilePhoto(base64Image);
           // Send base64Image to your backend API for storage
           // You can use fetch or any other method to send it to the server
@@ -139,6 +143,10 @@ const Profile = () => {
     }
   };
 
+  const isLoggedInUserOrAdmin = () =>
+    localStorage.getItem("name") === userDetails.name ||
+    localStorage.getItem("role") === ADMIN_ROLE;
+
   const getView = () => {
     const {
       name,
@@ -155,7 +163,11 @@ const Profile = () => {
         <section className="profile-photo-container">
           <section
             className="img-container"
-            onClick={() => document.getElementById("imageInput").click()}
+            onClick={
+              isLoggedInUserOrAdmin()
+                ? () => document.getElementById("imageInput").click()
+                : null
+            }
             style={{ backgroundImage: `url(${profilePhoto})` }}
           >
             {profilePhoto ? null : (
@@ -171,8 +183,7 @@ const Profile = () => {
           </section>
           <div padding="20px"></div>
           <section className="details">
-            {localStorage.getItem("name") === userDetails.name ||
-            localStorage.getItem("role") === ADMIN_ROLE ? (
+            {isLoggedInUserOrAdmin() ? (
               <Button onClick={handleOpenEditModal} type="primary">
                 Edit Profile
               </Button>

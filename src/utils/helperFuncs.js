@@ -47,3 +47,16 @@ export const setLocalStorageWithUserDetails = (userDetails = {}) => {
   localStorage.setItem('role', role);
 
 }
+
+export const clearLocalStorageWithUserDetails = () => {
+  localStorage.clear("authToken");
+  localStorage.clear("profile");
+  localStorage.clear("name");
+  localStorage.clear("role");
+  localStorage.clear("email");
+}
+
+export const debounceFn = (fn, timeOut, ref = {}) => {
+  clearTimeout(ref.current);
+  ref.current = setTimeout(fn, timeOut);
+}
