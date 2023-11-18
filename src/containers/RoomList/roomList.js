@@ -15,7 +15,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import AddRoomModal from "../../components/addRoomModal";
 import { get } from "lodash";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 dayjs.extend(customParseFormat);
 
 const RoomList = () => {
