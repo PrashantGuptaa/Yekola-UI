@@ -110,8 +110,8 @@ const Profile = () => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Check if the file size is within the allowed limit (512 *3 ~= 1.5 MB)
-      if (file.size <= 512 * 1024 * 3) {
+      // Check if the file size is within the allowed limit 
+      if (file.size <= 512 * 1024 * 6) {
         const reader = new FileReader();
         reader.onload = (e) => {
           const base64Image = e.target.result;
@@ -126,7 +126,7 @@ const Profile = () => {
       } else {
         // Display an error message or take appropriate action
         message.error(
-          "Image size exceeds the allowed limit (512 KB). Please choose a smaller image."
+          "Image size exceeds the allowed limit (3 MB). Please choose a smaller image."
         );
         // alert();
         // Clear the input field
