@@ -1,14 +1,14 @@
 import { Button } from "antd";
 import { Typography } from "antd";
-import "./otp.css";
 import { useNavigate } from "react-router-dom";
+import "./otp.css";
 
 const { Title } = Typography;
 
 const SuccessOtp = () => {
   const navigate = useNavigate();
 
-  const navigateToHome = () => navigate(`/home/room-list/Yekola`);
+  const navigateTProfile = () => navigate(`/profile?email=${localStorage.getItem("email")}`);
 
   return (
     <div className="otp-container">
@@ -19,7 +19,7 @@ const SuccessOtp = () => {
       <Title level={4}>
         Welcome to Yekola. Your account have been verified
       </Title>
-      <Button onClick={navigateToHome} type="primary">Home</Button>
+      <Button onClick={navigateTProfile} type="primary">Profile</Button>
     </div>
   );
 };

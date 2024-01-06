@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import SuccessOtp from "./successOtp";
 import ExpiredOtp from "./expiredOtp";
 import { get } from 'lodash';
+import { setLocalStorageWithUserDetails } from "../../utils/helperFuncs";
 
 const Otp = () => {
   const [loader, setLoader] = useState(true);
@@ -26,10 +27,9 @@ const Otp = () => {
         otp,
         token // temp token, only valid for 5 mins. Don't set in local storage
       });
-      const authToken = get(result, ['data', 'data', 'token']);
+      setLocalStorageWithUserDetails(get(result, ['data', 'data']));
       // const message = get(result, ['data', 'message']);
       message.success(get(result, ['data', 'message']));
-      localStorage.setItem('authToken', authToken);
       setSuccess(true);
     } catch (e) {
       console.error(e);
