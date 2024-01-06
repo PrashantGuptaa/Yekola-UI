@@ -1,4 +1,4 @@
-import { Form, Button, message } from "antd";
+import { Form, Button, message, Radio } from "antd";
 import InputWithLabel from "../../components/InputWithLabel";
 import { useState } from "react";
 import HttpServices from "../../configs/https.service";
@@ -10,7 +10,12 @@ import {
   rePasswordPolicy,
   emailPolicy,
 } from "../../utils/userSignPolicies";
-import { EMPTY_FIELD_ERROR, FIX_ERRORS } from "../../configs/constants";
+import {
+  EMPTY_FIELD_ERROR,
+  FIX_ERRORS,
+  LISTENER_ROLE,
+  TEACHER_ROLE,
+} from "../../configs/constants";
 import { get } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { setLocalStorageWithUserDetails } from "../../utils/helperFuncs";
@@ -21,6 +26,7 @@ const initialState = {
   password: "",
   rePassword: "",
   name: "",
+  role: LISTENER_ROLE,
 };
 
 const Register = () => {
@@ -50,7 +56,7 @@ const Register = () => {
         REGISTER_ENDPOINT,
         userDataObj
       );
-      setLocalStorageWithUserDetails(get(result, ['data', 'data']))
+      setLocalStorageWithUserDetails(get(result, ["data", "data"]));
       navigate(`/account`);
     } catch (e) {
       console.error(e);
@@ -138,14 +144,15 @@ const Register = () => {
           helperText={errors.rePassword}
           showError={showErrors.rePassword}
         />
-        {/* <div className="bottom-padding">
-          <CheckboxGroup
-            options={availableRoles}
-            value={userDataObj.roles}
-            onChange={(value) => handleInputChange("roles", value)}
-          />
-          {showErrors.roles && <div className="error">{errors.roles}</div>}
-        </div> */}
+        <div className="bottom-padding">
+          <Radio.Group
+            onChange={(e) => handleInputChange("role", e.target.value)}
+            value={userDataObj.role}
+          >
+            <Radio value={LISTENER_ROLE}>Learner</Radio>
+            <Radio value={TEACHER_ROLE}>Teacher</Radio>
+          </Radio.Group>
+        </div>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
