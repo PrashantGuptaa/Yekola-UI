@@ -12,6 +12,9 @@ import {
   Space,
 } from "antd";
 import {
+  LeftOutlined,
+} from '@ant-design/icons'
+import {
   languagesOfferedOptions,
   languagesSpokenOptions,
   rolesOptions,
@@ -26,7 +29,7 @@ import {
 } from "./../../configs/apiEndpoints";
 import { get } from "lodash";
 import SelectWithLabel from "../../components/SelectWithLabel";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 
@@ -39,8 +42,10 @@ const Profile = () => {
 
   const [form] = Form.useForm();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   const email = searchParams.get("email");
-  const { Title, Text } = Typography;
+  const { Text } = Typography;
 
   useEffect(() => {
     fetchUserDetails();
@@ -212,6 +217,7 @@ const Profile = () => {
             </div>
           </section>
         </section>
+        <section className="center-screen"></section>
         <section className="profile-details">
           <Text>
             <b>Bio</b>
@@ -219,6 +225,9 @@ const Profile = () => {
           <p>
             <Text type="primary">{bio}</Text>
           </p>
+          <div className="back-btn">
+        <Button onClick={() => navigate(`/home/room-list/Yekola`)}><LeftOutlined /> Back</Button>
+          </div>
         </section>
       </div>
     );
