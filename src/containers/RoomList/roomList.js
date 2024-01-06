@@ -27,7 +27,7 @@ const RoomList = () => {
   const [roomPagination, setRoomPagination] = useState({
     total: 1,
     defaultCurrent: 1,
-    defaultPageSize: 1,
+    defaultPageSize: 5,
   });
 
   const routeParams = useParams();
@@ -113,7 +113,7 @@ const RoomList = () => {
   return (
     <div className="room-list-container" id="room-list-container">
       <div className="btn-container">
-        <div className="room-title">{`Room List`}</div>
+        <div className="room-title">{`Upcoming classes`}</div>
         {showCreateRoomBtn && (
           <Button type="primary" onClick={() => setShowCreateRoomModal(true)}>
             {createRoomHeadingAndLabel}
