@@ -6,8 +6,6 @@ import {
   selectIsAllowedToPublish,
   selectLocalPeer,
 } from "@100mslive/react-sdk";
-
-import "./footer.css";
 import {
   TbScreenShare,
   TbScreenShareOff,
@@ -17,7 +15,7 @@ import {
 import { BsCameraVideo, BsCameraVideoOff } from 'react-icons/bs';
 import { FaUsersSlash, FaUsers } from "react-icons/fa";
 import { IoIosHand } from "react-icons/io";
-import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import "./footer.css";
 
 function HmsFooter({ showParticipantList, handleShowParticipantList }) {
   const { isLocalAudioEnabled, toggleAudio, isLocalVideoEnabled, toggleVideo } =
@@ -60,15 +58,15 @@ function HmsFooter({ showParticipantList, handleShowParticipantList }) {
         onClick={toggleAudio}
       >
         {isLocalAudioEnabled ? (
-          <div  onClick={() => SpeechRecognition.stopListening()}>
+          <>
             <TbMicrophone className="st-icon" />
             <span>Mute</span>
-          </div>
+          </>
         ) : (
-          <span onClick={() => SpeechRecognition.startListening()}>
+          <>
             <TbMicrophoneOff className="st-icon"  />
             <span>Unmute</span>
-          </span>
+          </>
         )}
 
   

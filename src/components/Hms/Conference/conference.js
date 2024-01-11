@@ -24,9 +24,11 @@ function Conference({ handleLeaveRoom }) {
   };
 
   const getPeerView = () => {
-    const peersView = [],
+    const leftPeersView = [], rightPeerView = [],
       teacherView = [];
+      let i = 0
 
+      // filling left and right alternatively to equal allocation
     peers.forEach((peer) => {
       if (advanceRoles.includes(peer?.roleName)) {
         teacherView.push(
@@ -37,19 +39,32 @@ function Conference({ handleLeaveRoom }) {
           </>
         );
       } else {
-        peersView.push(
-          <>
+        if (i % 2 === 0) {
+          leftPeersView.push(
+            <>
+              <Peer key={peer.id} peer={peer} />
+              {getNotificationDetail(peer)}
+              {contextHolder}
+            </>
+          );
+        }  else {
+
+          rightPeerView.push(
+            <>
             <Peer key={peer.id} peer={peer} />
             {getNotificationDetail(peer)}
             {contextHolder}
           </>
         );
       }
+      i++;
+      }
     });
     return (
       <div className="parent-container">
+        <div className="others-container left-container">{leftPeersView}</div>
         <div className="teacher-container">{teacherView}</div>
-        <div className="others-container">{peersView}</div>
+        <div className="others-container right-container">{rightPeerView}</div>
       </div>
     );
   };

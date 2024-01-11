@@ -24,7 +24,7 @@ function Peer({ peer }) {
         advanceRoles.includes(peer?.roleName)
           ? "teacher-peer peer-container"
           : "peer-container"
-      } ${isLocalVideoEnabled ? "no-padding" : null}`}
+      } ${isLocalVideoEnabled ? "no-padding" : ""}`}
     >
       <div className="peer-video-container">
         {isLocalVideoEnabled ? (
@@ -36,11 +36,13 @@ function Peer({ peer }) {
             playsInline
           />
         ) : (
-          <div className={`peer-avatar-container`}>
+          <div className={`peer-avatar-container ${!advanceRoles.includes(peer?.roleName)
+            ? "peer-student-avatar-container"
+            : ""}`}>
             <Avatar
               style={{
                 backgroundColor: getRandomAvatarColor(peer.id),
-                transform: "scale(2)",
+                transform: "scale(1.7)",
               }}
               size="large"
             >

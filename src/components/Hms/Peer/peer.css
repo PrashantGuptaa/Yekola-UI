@@ -5,7 +5,7 @@
     align-items: center;
     gap: 5px;
     background-color: rgb(27, 26, 30);
-    padding: 30px;
+    /* padding: 30px; */
     border-radius: 15px;
     color: white;
     width: 150px;
@@ -20,7 +20,8 @@
 }
 
 .no-padding {
-    padding: 0px;
+    /* padding: 0px; */
+
 }
 
 .peer-video {
@@ -45,6 +46,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}   
+
+.peer-student-avatar-container {
+    /* display: flex;
+    justify-content: center; */
+    align-items: flex-end;
 }   
 
 .peer-name {

@@ -4,7 +4,6 @@ import {
   useHMSActions,
   useHMSStore,
   selectPeers,
-  selectLocalPeer,
 } from "@100mslive/react-sdk";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -41,6 +40,7 @@ const InteractiveClass = () => {
       joinHmsRoom();
       isFirstRender.current = false;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const joinHmsRoom = async () => {
