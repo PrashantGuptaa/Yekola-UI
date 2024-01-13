@@ -9,7 +9,7 @@ const getCommonHeaders = () => {
 
 const BASE_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const HttpServices = {
-  getRequest: async (url, headers) => {
+  getRequest: async (url, headers = {}) => {
     const result = await axios({
       method: "get",
       url: `${BASE_BACKEND_URL}${url}`,
@@ -20,7 +20,7 @@ const HttpServices = {
     });
     return result;
   },
-  postRequest: async (url, data, headers) => {
+  postRequest: async (url, data, headers = {}) => {
     const result = await axios({
       method: "post",
       url: `${BASE_BACKEND_URL}${url}`,
@@ -32,7 +32,7 @@ const HttpServices = {
     });
     return result;
   },
-  deleteRequest: async (url, data, headers) => {
+  deleteRequest: async (url, data, headers = {}) => {
     const result = await axios({
       method: "delete",
       url: `${BASE_BACKEND_URL}${url}`,
@@ -44,7 +44,7 @@ const HttpServices = {
     });
     return result;
   },
-  patchRequest: async (url, data, headers) => {
+  patchRequest: async (url, data, headers = {}) => {
     const result = await axios({
       method: "patch",
       url: `${BASE_BACKEND_URL}${url}`,

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Form, message } from "antd";
 import "./login.css";
 import InputWithLabel from "./../../components/InputWithLabel";
 import { passwordPolicy, userNamePolicy } from "../../utils/userSignPolicies";
 import HttpServices from "../../configs/https.service";
 import { LOGIN_ENPOINT } from "../../configs/apiEndpoints";
-import { capitalize, get } from "lodash";
+import { get } from "lodash";
 import { FIX_ERRORS } from "./../../configs/constants";
 import { useNavigate } from 'react-router-dom';
-import Captcha from "../../components/Captcha";
 import { setLocalStorageWithUserDetails } from "../../utils/helperFuncs";
 
 const initialState = {
@@ -86,7 +85,6 @@ const Login = () => {
     <div className="login-form-container">
       <Form
         onFinish={handleSubmit}
-        //   {...formItemLayout}
         layout="vertical"
         form={form}
       >
@@ -106,8 +104,8 @@ const Login = () => {
           placeholder="Enter Password"
           helperText={errors.password}
           showError={showErrors.password}
-        />
-        <Captcha />
+          suffixAddOn={<Button onClick={() => navigate('/reset')}>Forget?</Button>}
+          />
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
             Sign In
