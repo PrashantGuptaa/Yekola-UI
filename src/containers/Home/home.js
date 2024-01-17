@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FETCH_ALL_PRODUCTS_ENDPOINT } from "../../configs/apiEndpoints";
 import HttpServices from "./../../configs/https.service";
 import { Spin, Card } from "antd";
-import ProductCard from "./../../components/ProductCard/";
 import "./home.css";
 import defaultImg from "../../assets/images/logo2.png";
 import { useNavigate } from 'react-router-dom';

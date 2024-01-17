@@ -4,12 +4,14 @@ import product from "../../assets/images/product4.png";
 
 import "./roomBlock2.css";
 import Typography from "antd/es/typography/Typography";
-import { HiChevronRight } from "react-icons/hi";
-import moment from "moment";
+import { Card } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
+const { Meta } = Card;
 const { Text } = Typography;
 
-const RoomBlock2 = ({ roomObj, handleJoinRoom }) => {
+const RoomBlock2 = ({ roomObj, handleJoinRoom, handleShowDeleteModal, showDeleteBtn }) => {
   const {
     name,
     description,
@@ -21,10 +23,7 @@ const RoomBlock2 = ({ roomObj, handleJoinRoom }) => {
     endDateTime,
   } = roomObj;
 
-  const isRoomDisabled = (start, end) => moment().isBetween(start, end, "minute", '[]');
-
-  // const disabled = isRoomDisabled(startDateTime, endDateTime);
-const disabled = false;
+  const disabled = false;
   const getDate = (dateTime) => {
     if (!dateTime) return "";
     const dateStr = new Date(dateTime).toDateString();
@@ -33,37 +32,56 @@ const disabled = false;
     return `${dateStr.slice(dateStr.indexOf(" "))} ${time}`;
     // return (new Date(date)).toLocaleString();
   };
+
+  const actions = [
+    <Button
+    className="btn-section"
+    style={{
+            fontSize: 16,
+            
+          }}
+          disabled={disabled}
+          loading={loading}
+          onClick={() => handleJoinRoom(roomId, name)}
+        >
+          Start Learning
+        </Button>
+  ]
+
+  if (showDeleteBtn) {
+    actions.push(  <DeleteOutlined
+      key="delete"
+      onClick={() => handleShowDeleteModal({ roomId, name })}
+    />)
+  }
+  
   return (
-    <div className="card-container">
-      <div className="room-img-container">
-        <img src={product} alt="product-img" className="room-img" />
-      </div>
-      <div className="room-details">
-        <Text className="class-name">{name}</Text>
-        <Text type="secondary">{description}</Text>
-        <div className="row">
-          <Text>Instructor:&nbsp; </Text>
-          <Text type="secondary">{instructor?.name}</Text>
-        </div>
-        <div className="row">
-          <Text>Start:&nbsp; </Text>
-          <Text type="secondary">{getDate(startDateTime)}</Text>
-        </div>
-        <div className="row">
-          <Text>End:&nbsp; </Text>
-          <Text type="secondary">{getDate(endDateTime)}</Text>
-        </div>
-      </div>
-      <button
-        className="btm-section"
-        disabled={disabled}
-        loading={loading}
-        onClick={() => handleJoinRoom(roomId, name)}
-      >
-        Start Learning
-        <HiChevronRight />
-      </button>
-    </div>
+    <Card
+      style={{
+        width: 300,
+        boxShadow: "1px 1px 3px 0px gray",
+      }}
+      bordered={true}
+      actions={actions}
+      cover={<img alt="product-img" src={product} />}
+    >
+      <Meta
+        title={name}
+        description={
+          <>
+            <Text type="secondary">{description}</Text>
+            <div className="row">
+              <Text>Start:&nbsp; </Text>
+              <Text type="secondary">{getDate(startDateTime)}</Text>
+            </div>
+            <div className="row">
+              <Text>End:&nbsp; </Text>
+              <Text type="secondary">{getDate(endDateTime)}</Text>
+            </div>
+          </>
+        }
+      />
+    </Card>
   );
 };
 

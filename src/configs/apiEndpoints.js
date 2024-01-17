@@ -9,6 +9,7 @@ export const RESET_PASSWORD_ENDPOINT = `auth/reset-password`;
 export const UPDATE_PASSWORD_ENDPOINT = `auth/update-password`;
 export const CREATE_ROOM_AUTH_ENDPOINT = `room/permitted`;
 export const CREATE_ROOM_ENDPOINT = "room/create";
+export const DELETE_ROOM_ENDPOINT =`room/delete`;
 export const USER_VALIDATION_ENDPOINT = `auth/validate/`;
 export const VERIFY_OTP_ENDPOINT = `auth/verify-otp`;
 export const SEND_OTP_ENDPOINT = `auth/send-otp`;

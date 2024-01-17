@@ -1,4 +1,4 @@
-import { Button, message, Spin, Typography, Pagination } from "antd";
+import { Button, message, Spin, Typography, Pagination, Modal } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./roomList.css";
 import { useState, useEffect } from "react";
@@ -6,6 +6,7 @@ import HttpServices from "../../configs/https.service";
 import {
   CREATE_ROOM_AUTH_ENDPOINT,
   CREATE_ROOM_ENDPOINT,
+  DELETE_ROOM_ENDPOINT,
   FETCH_ROOM_LIST,
 } from "../../configs/apiEndpoints";
 import RoomBlock from "../../components/RoomBlock";
@@ -14,8 +15,11 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import AddRoomModal from "../../components/addRoomModal";
 import { get } from "lodash";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 
 const { Title } = Typography;
+const { confirm } = Modal;
+
 dayjs.extend(customParseFormat);
 
 const RoomList = () => {
@@ -110,6 +114,29 @@ const RoomList = () => {
     setRoomPagination({ ...roomPagination, defaultCurrent });
   };
 
+  const showDeleteConfirmModal = (roomDetails) => {
+    confirm({
+      title: `Do you want to delete ${roomDetails.name} class?`,
+      // icon: <ExclamationCircleFilled />,
+      content: "This is irreversible action and cannot be restored",
+      // width: 400,
+      okText: "Submit",
+      onOk: () => handleDeleteClassRoom(roomDetails.roomId),
+      onCancel() {},
+    });
+  };
+
+  const handleDeleteClassRoom = async (roomId) => {
+    try {
+      await HttpServices.patchRequest(DELETE_ROOM_ENDPOINT, {
+        roomId
+      });
+      await fetchRoomsList();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className="room-list-container" id="room-list-container">
       <div className="btn-container">
@@ -133,6 +160,8 @@ const RoomList = () => {
                 roomObj={roomObj}
                 key={roomObj.roomId}
                 handleJoinRoom={handleJoinRoom}
+                handleShowDeleteModal={showDeleteConfirmModal}
+                showDeleteBtn={showCreateRoomBtn}
               />
             ))}
           </div>
