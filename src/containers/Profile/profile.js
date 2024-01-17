@@ -282,7 +282,7 @@ const Profile = () => {
             selectedValue={langaugesLearnt}
             options={languagesSpokenOptions}
             handleChange={(value) => handleChange("langaugesLearnt", value)}
-            label="Languages learnt"
+            label="Languages Spoken"
             mode="multiple"
           />
 
