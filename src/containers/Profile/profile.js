@@ -176,7 +176,7 @@ const Profile = () => {
             style={{ backgroundImage: `url(${profilePhoto})` }}
           >
             {profilePhoto ? null : (
-              <span className="upload-text">Click to Upload Image</span>
+              <span className="upload-text">{isLoggedInUserOrAdmin() ? 'Click to Upload Image' : "No Image"}</span>
             )}
             <input
               type="file"
